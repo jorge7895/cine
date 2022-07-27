@@ -9,6 +9,6 @@ public class SalaUtil {
 	public static final int NUMERO_DE_SALAS = 3;
 
 	public boolean isSalaValida(Venta venta) {
-		return venta.getSalaId() < 0 || venta.getSalaId() >= NUMERO_DE_SALAS;
+		return venta.getSalaId() < 0 || venta.getSalaId() > NUMERO_DE_SALAS;
 	}
 }

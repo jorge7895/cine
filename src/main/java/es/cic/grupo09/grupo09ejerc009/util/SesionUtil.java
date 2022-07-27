@@ -9,6 +9,6 @@ public class SesionUtil {
 	public static final int NUMERO_DE_SALAS = 3;
 
 	public boolean isSesionValida(Venta venta) {
-		return venta.getSesionId() < 0 || venta.getSesionId() >= NUMERO_DE_SALAS;
+		return venta.getSesionId() < 0 || venta.getSesionId() > NUMERO_DE_SALAS;
 	}
 }

@@ -1,5 +1,7 @@
 package es.cic.grupo09.grupo09ejerc009.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,17 +29,23 @@ public class VentaController {
 	
 	@GetMapping("/{id}")
 	public Venta read(@PathVariable(name = "id")long id) {
-		throw new UnsupportedOperationException("Operacion no permitida");
+		return ventaService.read(id);
+	}
+	
+	@GetMapping
+	public List<Venta> read() {
+		return ventaService.read();
+
 	}
 	
 	@PutMapping
-	public void update(Venta venta) {
-		throw new UnsupportedOperationException("Operacion no permitida");
+	public void update(@RequestBody Venta venta) {
+		ventaService.update(venta);
 	}
 	
-	@DeleteMapping
-	public void delete(Venta venta) {
-		throw new UnsupportedOperationException("Operacion no permitida");
+	@DeleteMapping("/{ventaId}")
+	public void delete(@PathVariable("ventaId")long ventaId) {
+		ventaService.delete(ventaId);
 	}
 
 }

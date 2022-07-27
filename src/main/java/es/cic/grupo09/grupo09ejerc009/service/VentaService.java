@@ -1,14 +1,20 @@
 package es.cic.grupo09.grupo09ejerc009.service;
 
+import java.util.List;
+
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import es.cic.grupo09.grupo09ejerc009.model.Sesion;
 import es.cic.grupo09.grupo09ejerc009.model.Venta;
 import es.cic.grupo09.grupo09ejerc009.repository.VentaRepository;
 import es.cic.grupo09.grupo09ejerc009.util.SalaUtil;
 import es.cic.grupo09.grupo09ejerc009.util.SesionUtil;
 
 @Service
+@Transactional
 public class VentaService {
 
 	private static final int PRECIO_POR_ENTRADA = 5;
@@ -44,7 +50,32 @@ public class VentaService {
 			throw new VentaException("El numero de entradas no puede ser no positivo", venta);
 		}
 		
-		int entradasDisponibles =ventaRepository.getEntradasDisponibles(venta.getSesionId(), venta.getSalaId());
+		Sesion sesion = null;
+		
+		if (venta.getSalaId() == 1 && venta.getSesionId() == 1) {
+			sesion = ventaRepository.getSesion(1);
+		} else if (venta.getSalaId() == 1 && venta.getSesionId() == 2) {
+			sesion = ventaRepository.getSesion(2);
+		} else if (venta.getSalaId() == 1 && venta.getSesionId() == 3) {
+			sesion = ventaRepository.getSesion(3);
+			
+		} else if (venta.getSalaId() == 2 && venta.getSesionId() == 1) {
+			sesion = ventaRepository.getSesion(4);
+		} else if (venta.getSalaId() == 2 && venta.getSesionId() == 2) {
+			sesion = ventaRepository.getSesion(5);
+		} else if (venta.getSalaId() == 2 && venta.getSesionId() == 3) {
+			sesion = ventaRepository.getSesion(6);
+			
+		} else if (venta.getSalaId() == 3 && venta.getSesionId() == 1) {
+			sesion = ventaRepository.getSesion(7);
+		} else if (venta.getSalaId() == 3 && venta.getSesionId() == 2) {
+			sesion = ventaRepository.getSesion(8);
+		} else if (venta.getSalaId() == 3 && venta.getSesionId() == 3) {
+			sesion = ventaRepository.getSesion(9);
+		}
+		
+		
+		int entradasDisponibles =ventaRepository.getEntradasDisponibles(sesion);
 		
 		if(entradasDisponibles<venta.getNumeroEntradas()) {
 			throw new VentaException(
@@ -55,19 +86,29 @@ public class VentaService {
 		//Calculamos el precio
 		venta.setPrecio(venta.getNumeroEntradas() * PRECIO_POR_ENTRADA);
 		
-		this.ventaRepository.actualizaEntradasDisponibles(venta.getSalaId(),venta.getSesionId(), entradasDisponibles-venta.getNumeroEntradas());
+		int entradasRestantes=this.ventaRepository.actualizaEntradasDisponibles(sesion, venta.getNumeroEntradas());
+		sesion.setButacas(entradasRestantes);
+		
+		ventaRepository.updateSesion(sesion);
+		
 		return this.ventaRepository.create(venta);
 	}
 
 	public Venta read(long id) {
-		throw new UnsupportedOperationException("Operacion no permitida");
+		
+		return ventaRepository.read(id);
 	}
+	
+	public List<Venta> read() {
+		return ventaRepository.read();
+	}
+
 
 	public void update(Venta venta) {
-		throw new UnsupportedOperationException("Operacion no permitida");
+		ventaRepository.update(venta);
 	}
 
-	public void delete(Venta venta) {
-		throw new UnsupportedOperationException("Operacion no permitida");
+	public void delete(long ventaId) {
+		ventaRepository.delete(ventaId);
 	}
 }

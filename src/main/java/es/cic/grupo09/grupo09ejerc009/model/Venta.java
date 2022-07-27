@@ -2,15 +2,28 @@ package es.cic.grupo09.grupo09ejerc009.model;
 
 import java.util.Objects;
 
-public class Venta {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
+@Entity
+public class Venta {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
+	
+	@Column(name = "numero_entradas",nullable = false)
 	private int numeroEntradas;
 	
 	private double precio;
 	
+	@Column(name = "sesion_id",nullable = false)
 	private int sesionId;
 	
+	@Column(name = "sala_id",nullable = false)
 	private int salaId;
 
 	public long getId() {

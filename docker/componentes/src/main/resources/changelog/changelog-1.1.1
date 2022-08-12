@@ -1,0 +1,53 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <changeSet author="curso04 (generated)" id="1659956483312-1">
+        <createTable tableName="cuenta">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="activa" type="BIT(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="num_cuenta" type="VARCHAR(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="saldo" type="DOUBLE">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="curso04 (generated)" id="1659956483312-2">
+        <createTable tableName="hibernate_sequence">
+            <column name="next_val" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="curso04 (generated)" id="1659956483312-3">
+        <createTable tableName="registro_operacion">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="saldo" type="DOUBLE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="tipo" type="VARCHAR(255)"/>
+            <column name="fk_cuenta_destino" type="BIGINT"/>
+            <column name="fk_cuenta_origen" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="curso04 (generated)" id="1659956483312-4">
+        <createIndex indexName="fk_cuenta_cuentaDestino" tableName="registro_operacion">
+            <column name="fk_cuenta_destino"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="curso04 (generated)" id="1659956483312-5">
+        <createIndex indexName="fk_cuenta_cuentaOrigen" tableName="registro_operacion">
+            <column name="fk_cuenta_origen"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="curso04 (generated)" id="1659956483312-6">
+        <addForeignKeyConstraint baseColumnNames="fk_cuenta_destino" baseTableName="registro_operacion" constraintName="fk_cuenta_cuentaDestino" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="cuenta" validate="true"/>
+    </changeSet>
+    <changeSet author="curso04 (generated)" id="1659956483312-7">
+        <addForeignKeyConstraint baseColumnNames="fk_cuenta_origen" baseTableName="registro_operacion" constraintName="fk_cuenta_cuentaOrigen" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="cuenta" validate="true"/>
+    </changeSet>
+</databaseChangeLog>

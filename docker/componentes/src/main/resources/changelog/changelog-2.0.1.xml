@@ -1,0 +1,83 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <changeSet author="curso04 (generated)" id="1660203864273-1">
+        <createTable tableName="apunte">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="externa" type="BIT(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="importe" type="FLOAT(12)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cuenta_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="curso04 (generated)" id="1660203864273-2">
+        <createTable tableName="cuenta">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="activa" type="BIT(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="iban" type="VARCHAR(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="saldo" type="DOUBLE">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="curso04 (generated)" id="1660203864273-3">
+        <createTable tableName="ingreso">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="apunte_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="curso04 (generated)" id="1660203864273-4">
+        <createTable tableName="retiro">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="apunte_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="curso04 (generated)" id="1660203864273-5">
+        <createTable tableName="transferencia">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="ingreso_id" type="BIGINT"/>
+            <column name="retiro_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="curso04 (generated)" id="1660203864273-6">
+        <createIndex indexName="FK6ve9k0ej3ght64fj4kar62h8h" tableName="ingreso">
+            <column name="apunte_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="curso04 (generated)" id="1660203864273-7">
+        <createIndex indexName="FK707y0ebiwruxr5ofedks42aox" tableName="retiro">
+            <column name="apunte_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="curso04 (generated)" id="1660203864273-8">
+        <createIndex indexName="FKa728wcqgd0y1si6d84u0hmln9" tableName="transferencia">
+            <column name="ingreso_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="curso04 (generated)" id="1660203864273-9">
+        <createIndex indexName="FKbwkn4y5wfdiqgymq0yjdv0w9c" tableName="transferencia">
+            <column name="retiro_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="curso04 (generated)" id="1660203864273-10">
+        <createIndex indexName="FKrs5hx0yw2tc6awund154m5xic" tableName="apunte">
+            <column name="cuenta_id"/>
+        </createIndex>
+    </changeSet>
+</databaseChangeLog>

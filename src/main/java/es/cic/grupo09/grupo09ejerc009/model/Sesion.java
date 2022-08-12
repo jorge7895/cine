@@ -1,69 +1,57 @@
 package es.cic.grupo09.grupo09ejerc009.model;
 
-import java.util.Objects;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ForeignKey;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import es.cic.grupo09.grupo09ejerc009.util.AbstractModel;
 
 @Entity
-public class Sesion {
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
-	
-	@Column(name = "sala_id",nullable = false)
-	private long salaId;
-	
-	private int butacas;
+@Table(name = "SESION")
+public class Sesion extends AbstractModel {
 
-	public long getId() {
-		return id;
+	private static final long serialVersionUID = 4073218442416202924L;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "fk_sala", foreignKey = @ForeignKey(name = "fk_sala_sesionId"))
+	private Sala sala;
+
+	private String pelicula;
+
+	private int aforo;
+
+	@OneToMany(mappedBy = "sesion")
+	private List<Entrada> entradaSesion = new ArrayList<>();
+
+	public String getPelicula() {
+		return pelicula;
 	}
 
-	public long getSalaId() {
-		return salaId;
+	public void setPelicula(String pelicula) {
+		this.pelicula = pelicula;
 	}
 
-	public int getButacas() {
-		return butacas;
+	public int getAforo() {
+		return aforo;
 	}
 
-	public void setId(long id) {
-		this.id = id;
+	public void setAforo(int aforo) {
+		this.aforo = aforo;
 	}
 
-	public void setSalaId(long salaId) {
-		this.salaId = salaId;
+	public List<Entrada> getEntradaSesion() {
+		return entradaSesion;
 	}
 
-	public void setButacas(int butacas) {
-		this.butacas = butacas;
+	public void setEntradaSesion(List<Entrada> entradaSesion) {
+		this.entradaSesion = entradaSesion;
 	}
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(id, salaId);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Sesion other = (Sesion) obj;
-		return id == other.id && salaId == other.salaId;
-	}
-	
-	
-	
-	
-	
-	
 }

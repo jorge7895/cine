@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import es.cic.grupo09.grupo09ejerc009.model.Venta;
 
+@SuppressWarnings("serial")
 @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
 public class VentaException extends RuntimeException {
 

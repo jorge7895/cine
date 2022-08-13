@@ -38,9 +38,6 @@ class VentaControllerTest {
 	@PersistenceContext
 	private EntityManager em;
 
-	private Venta venta1;
-	private Venta venta2;
-
 	@BeforeEach
 	void setUp() throws Exception {
 	}

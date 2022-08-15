@@ -16,12 +16,22 @@ public class Venta extends AbstractModel {
 
 	private static final long serialVersionUID = 7212375577490655228L;
 
+	private float importeTotal;
+
 	private LocalDateTime fhCreacion;
 
 	private LocalDateTime fhModificado;
 
 	@OneToMany(mappedBy = "venta")
 	private List<DetalleVenta> detalleVentaVenta = new ArrayList<>();
+
+	public float getImporteTotal() {
+		return importeTotal;
+	}
+
+	public void setImporteTotal(float importeTotal) {
+		this.importeTotal = importeTotal;
+	}
 
 	public LocalDateTime getFhCreacion() {
 		return fhCreacion;

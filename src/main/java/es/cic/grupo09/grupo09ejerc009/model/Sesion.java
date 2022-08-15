@@ -1,5 +1,6 @@
 package es.cic.grupo09.grupo09ejerc009.model;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +28,10 @@ public class Sesion extends AbstractModel {
 
 	private int aforo;
 
+	private LocalDateTime horaEmpieza;
+
+	private int duracionMin;
+
 	@OneToMany(mappedBy = "sesion")
 	private List<Entrada> entradaSesion = new ArrayList<>();
 
@@ -52,6 +57,22 @@ public class Sesion extends AbstractModel {
 
 	public void setAforo(int aforo) {
 		this.aforo = aforo;
+	}
+
+	public LocalDateTime getHoraEmpieza() {
+		return horaEmpieza;
+	}
+
+	public void setHoraEmpieza(LocalDateTime horaEmpieza) {
+		this.horaEmpieza = horaEmpieza;
+	}
+
+	public int getDuracionMin() {
+		return duracionMin;
+	}
+
+	public void setDuracionMin(int duracionMin) {
+		this.duracionMin = duracionMin;
 	}
 
 	public List<Entrada> getEntradaSesion() {

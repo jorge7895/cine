@@ -24,6 +24,7 @@ public class SalaService {
 		LOGGER.trace("Utilizando servicio ".concat(getClass().getName()).concat(" para intento de creacion de sala."));
 
 		salaRepository.save(sala);
+
 		return salaRepository.findById(sala.getId()).get();
 
 	}

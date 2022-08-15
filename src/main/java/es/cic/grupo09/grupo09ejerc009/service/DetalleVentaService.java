@@ -36,6 +36,13 @@ public class DetalleVentaService {
 
 	}
 
+	public void update(DetalleVenta detalleVenta) {
+
+		LOGGER.trace("Utilizando servicio ".concat(getClass().getName())
+				.concat(" para intento de modificacion de detalleVenta."));
+
+	}
+
 	public DetalleVenta localizarEntrada(Entrada entrada) {
 		return detalleVentaRepository.findByEntrada(entrada);
 	}

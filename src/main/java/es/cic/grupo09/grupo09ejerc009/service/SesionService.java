@@ -38,6 +38,9 @@ public class SesionService {
 
 	public List<Sesion> readAll() {
 
+		LOGGER.trace(
+				"Utilizando servicio ".concat(getClass().getName()).concat(" para intento de lectura de sesiones."));
+
 		return (List<Sesion>) sesionRepository.findAll();
 
 	}

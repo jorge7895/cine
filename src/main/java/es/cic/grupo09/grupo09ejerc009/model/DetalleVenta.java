@@ -25,6 +25,8 @@ public class DetalleVenta extends AbstractModel {
 
 	private float importe;
 
+	private boolean active;
+
 	public Entrada getEntrada() {
 		return entrada;
 	}
@@ -47,6 +49,14 @@ public class DetalleVenta extends AbstractModel {
 
 	public void setImporte(float importe) {
 		this.importe = importe;
+	}
+
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
 	}
 
 }

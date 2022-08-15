@@ -1,10 +1,12 @@
 package es.cic.grupo09.grupo09ejerc009.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -66,7 +68,7 @@ class VentaServiceTest {
 		List<Entrada> listaEntradas = initEntradas(nEntradas);
 		Venta nuevaVenta = ventaService.create(listaEntradas);
 
-		ventaService.updateDevolverAll(nuevaVenta, listaEntradas);
+		ventaService.updateDevolver(nuevaVenta, listaEntradas);
 		assertEquals(0, nuevaVenta.getImporteTotal());
 	}
 
@@ -77,37 +79,69 @@ class VentaServiceTest {
 		Venta nuevaVenta = ventaService.create(listaEntradas);
 
 		listaEntradas.remove(0);
-		assertThrows(VentaException.class, () -> ventaService.updateDevolverAll(nuevaVenta, listaEntradas));
+		assertThrows(VentaException.class, () -> ventaService.updateDevolver(nuevaVenta, listaEntradas));
 	}
 
 	@Test
 	void updateDevolverTodoErrorRemplazoFalsoTest() {
 		int nEntradas = 10;
-
 		Entrada entradaFalsa = new Entrada();
 		entradaFalsa.setDescuento(EnumDescuento.GRUPO);
 		entradaFalsa.setSesion(sesiones[0]);
-
 		List<Entrada> listaEntradas = initEntradas(nEntradas);
 		Venta nuevaVenta = ventaService.create(listaEntradas);
-
 		listaEntradas.set(0, entradaFalsa);
 
-		assertThrows(VentaException.class, () -> ventaService.updateDevolverAll(nuevaVenta, listaEntradas));
+		assertThrows(VentaException.class, () -> ventaService.updateDevolver(nuevaVenta, listaEntradas));
 	}
 
 	@Test
 	void updateDevolverTodoErrorRemplazoOtraTest() {
 		int nEntradas = 10;
-
 		List<Entrada> listaEntradas1 = initEntradas(nEntradas);
 		Venta nuevaVenta1 = ventaService.create(listaEntradas1);
-
 		List<Entrada> listaEntradas2 = initEntradas(nEntradas);
-
 		listaEntradas1.set(0, listaEntradas2.get(0));
 
-		assertThrows(VentaException.class, () -> ventaService.updateDevolverAll(nuevaVenta1, listaEntradas1));
+		assertThrows(VentaException.class, () -> ventaService.updateDevolver(nuevaVenta1, listaEntradas1));
+	}
+
+	@Test
+	void updateDevolverTodoErrorUnaMasTest() {
+		int nEntradas = 10;
+		Entrada entradaFalsa = new Entrada();
+		entradaFalsa.setDescuento(EnumDescuento.GRUPO);
+		entradaFalsa.setSesion(sesiones[0]);
+		List<Entrada> listaEntradas = initEntradas(nEntradas);
+		Venta nuevaVenta = ventaService.create(listaEntradas);
+		listaEntradas.add(entradaFalsa);
+
+		assertThrows(VentaException.class, () -> ventaService.updateDevolver(nuevaVenta, listaEntradas));
+	}
+
+	@Test
+	void updateDevolverYAnnadirValidTest() {
+		int nEntradas = 10;
+		List<Entrada> listaEntradasDevolver = initEntradas(nEntradas);
+		Venta nuevaVenta = ventaService.create(listaEntradasDevolver);
+		float loQueValia = nuevaVenta.getImporteTotal();
+		List<Entrada> listaEntradasAnnadir = initEntradas(20);
+		ventaService.updateDevolver(nuevaVenta, listaEntradasDevolver, listaEntradasAnnadir);
+		Venta ventaModificada = ventaService.readById(nuevaVenta.getId());
+
+		assertNotEquals(loQueValia, ventaModificada.getImporteTotal());
+	}
+
+	@Test
+	void updateAnnadirValidTest() {
+		List<Entrada> listaEntradasDevolver = new ArrayList<>();
+		Venta nuevaVenta = ventaService.create(listaEntradasDevolver);
+		float loQueValia = nuevaVenta.getImporteTotal();
+		List<Entrada> listaEntradasAnnadir = initEntradas(20);
+		ventaService.updateDevolver(nuevaVenta, listaEntradasDevolver, listaEntradasAnnadir);
+		Venta ventaModificada = ventaService.readById(nuevaVenta.getId());
+
+		assertNotEquals(loQueValia, ventaModificada.getImporteTotal());
 	}
 
 	@Test
@@ -132,6 +166,18 @@ class VentaServiceTest {
 		ventaService.create(listaEntradas1);
 
 		assertTrue(ventaService.readBySesion(sesiones[0]).size() > 0);
+	}
+
+	@Test
+	void readVentasByDiaTest() {
+		List<Entrada> listaEntradas1 = initEntradas(10);
+		ventaService.create(listaEntradas1);
+		listaEntradas1 = initEntradas(10);
+		ventaService.create(listaEntradas1);
+		listaEntradas1 = initEntradas(10);
+		ventaService.create(listaEntradas1);
+
+		assertTrue(ventaService.readByDay(LocalDate.now()).size() > 0);
 	}
 
 	private List<Entrada> initEntradas(int nEntradas) {

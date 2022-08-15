@@ -1,5 +1,6 @@
 package es.cic.grupo09.grupo09ejerc009.repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.Query;
@@ -19,4 +20,7 @@ public interface VentaRepository extends CrudRepository<Venta, Long> {
 
 	@Query(name = "listaFilterSesion")
 	public List<Venta> readBySesion(@Param("sesion") Sesion sesion);
+
+	@Query(name = "listaFilterDia")
+	public List<Venta> readByDia(@Param("dia") LocalDateTime dia, @Param("dia2") LocalDateTime dia2);
 }

@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -12,6 +14,9 @@ import es.cic.grupo09.grupo09ejerc009.util.AbstractModel;
 
 @Entity
 @Table(name = "VENTA")
+@NamedQueries({
+		@NamedQuery(name = "listaFilterSesionAndSala", query = "SELECT v FROM Venta v INNER JOIN DetalleVenta dv ON v.id = dv.venta INNER JOIN Entrada e ON dv.entrada = e.id INNER JOIN Sesion se ON e.sesion = se.id INNER JOIN Sala sa ON se = :sesion WHERE se.id = :sesion AND sa = :sala"),
+		@NamedQuery(name = "listaFilterSesion", query = "SELECT v FROM Venta v INNER JOIN DetalleVenta dv ON v.id = dv.venta INNER JOIN Entrada e ON dv.entrada = e.id INNER JOIN Sesion se ON e.sesion = se.id INNER JOIN Sala sa ON se = :sesion WHERE se.id = :sesion") })
 public class Venta extends AbstractModel {
 
 	private static final long serialVersionUID = 7212375577490655228L;

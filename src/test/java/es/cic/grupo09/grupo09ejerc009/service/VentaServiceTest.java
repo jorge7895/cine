@@ -56,9 +56,8 @@ class VentaServiceTest {
 	@Test
 	void createVentaAforoErrorTest() {
 		int nEntradas = 200;
-		Venta nuevaVenta = ventaService.create(initEntradas(nEntradas));
 
-		assertNotNull(nuevaVenta);
+		assertThrows(VentaException.class, () -> ventaService.create(initEntradas(nEntradas)));
 	}
 
 	@Test

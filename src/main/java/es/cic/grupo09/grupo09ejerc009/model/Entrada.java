@@ -27,13 +27,13 @@ public class Entrada extends AbstractModel {
 	private EnumDescuento descuento;
 
 	@OneToMany(mappedBy = "entrada")
-	private List<DetalleCompra> detallecompraEntrada = new ArrayList<>();
+	private List<DetalleVenta> detalleVentaEntrada = new ArrayList<>();
 
-	public Sesion getSala() {
+	public Sesion getSesion() {
 		return sesion;
 	}
 
-	public void setSala(Sesion sesion) {
+	public void setSesion(Sesion sesion) {
 		this.sesion = sesion;
 	}
 
@@ -43,6 +43,14 @@ public class Entrada extends AbstractModel {
 
 	public void setDescuento(EnumDescuento descuento) {
 		this.descuento = descuento;
+	}
+
+	public List<DetalleVenta> getDetalleVentaEntrada() {
+		return detalleVentaEntrada;
+	}
+
+	public void setDetalleVentaEntrada(List<DetalleVenta> detalleVentaEntrada) {
+		this.detalleVentaEntrada = detalleVentaEntrada;
 	}
 
 }

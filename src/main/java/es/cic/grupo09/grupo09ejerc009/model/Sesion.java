@@ -30,6 +30,14 @@ public class Sesion extends AbstractModel {
 	@OneToMany(mappedBy = "sesion")
 	private List<Entrada> entradaSesion = new ArrayList<>();
 
+	public Sala getSala() {
+		return sala;
+	}
+
+	public void setSala(Sala sala) {
+		this.sala = sala;
+	}
+
 	public String getPelicula() {
 		return pelicula;
 	}

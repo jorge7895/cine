@@ -21,7 +21,7 @@ public class Venta extends AbstractModel {
 	private LocalDateTime fhModificado;
 
 	@OneToMany(mappedBy = "venta")
-	private List<DetalleCompra> detallecompraVenta = new ArrayList<>();
+	private List<DetalleVenta> detalleVentaVenta = new ArrayList<>();
 
 	public LocalDateTime getFhCreacion() {
 		return fhCreacion;
@@ -39,12 +39,12 @@ public class Venta extends AbstractModel {
 		this.fhModificado = fhModificado;
 	}
 
-	public List<DetalleCompra> getDetallecompraVenta() {
-		return detallecompraVenta;
+	public List<DetalleVenta> getDetalleVentaVenta() {
+		return detalleVentaVenta;
 	}
 
-	public void setDetallecompraVenta(List<DetalleCompra> detallecompraVenta) {
-		this.detallecompraVenta = detallecompraVenta;
+	public void setDetalleVentaVenta(List<DetalleVenta> detalleVentaVenta) {
+		this.detalleVentaVenta = detalleVentaVenta;
 	}
 
 }

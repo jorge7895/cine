@@ -10,17 +10,17 @@ import javax.persistence.Table;
 import es.cic.grupo09.grupo09ejerc009.util.AbstractModel;
 
 @Entity
-@Table(name = "DETALLE_COMPRA")
-public class DetalleCompra extends AbstractModel {
+@Table(name = "DETALLE_VENTA")
+public class DetalleVenta extends AbstractModel {
 
 	private static final long serialVersionUID = 7474788679925929893L;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "fk_detallecompra_1", foreignKey = @ForeignKey(name = "fk_entrada_detalleCompraId"))
+	@JoinColumn(name = "fk_detalleventa_1", foreignKey = @ForeignKey(name = "fk_entrada_detalleVentaId"))
 	private Entrada entrada;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "fk_detallecompra_2", foreignKey = @ForeignKey(name = "fk_venta_detalleCompraId"))
+	@JoinColumn(name = "fk_detalleventa_2", foreignKey = @ForeignKey(name = "fk_venta_detalleVentaId"))
 	private Venta venta;
 
 	private float importe;

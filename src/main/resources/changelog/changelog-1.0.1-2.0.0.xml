@@ -1,0 +1,366 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <changeSet author="curso04 (generated)" id="1660586586853-1">
+        <createTable tableName="detalle_venta">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="active" type="BIT(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="importe" type="FLOAT(12)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fk_detalleventa_1" type="BIGINT"/>
+            <column name="fk_detalleventa_2" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="curso04 (generated)" id="1660586586853-2">
+        <createTable tableName="entrada">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="descuento" type="INT"/>
+            <column name="fk_sesion" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="curso04 (generated)" id="1660586586853-3">
+        <createTable tableName="sala">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="capacidad" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="curso04 (generated)" id="1660586586853-4">
+        <addColumn tableName="sesion">
+            <column name="aforo" type="INT(10)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="curso04 (generated)" id="1660586586853-5">
+        <addColumn tableName="venta">
+            <column name="fh_creacion" type="DATETIME"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="curso04 (generated)" id="1660586586853-6">
+        <addColumn tableName="sesion">
+            <column name="duracion_min" type="INT(10)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="curso04 (generated)" id="1660586586853-7">
+        <addColumn tableName="venta">
+            <column name="fh_modificado" type="DATETIME"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="curso04 (generated)" id="1660586586853-8">
+        <addColumn tableName="sesion">
+            <column name="hora_empieza" type="DATETIME"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="curso04 (generated)" id="1660586586853-9">
+        <addColumn tableName="venta">
+            <column name="importe_total" type="FLOAT(12)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="curso04 (generated)" id="1660586586853-10">
+        <addColumn tableName="sesion">
+            <column name="pelicula" type="VARCHAR(255 BYTE)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="curso04 (generated)" id="1660586586853-11">
+        <addColumn tableName="sesion">
+            <column name="fk_sala" type="BIGINT(19)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="curso04 (generated)" id="1660586586853-12">
+        <createIndex indexName="fk_entrada_detalleVentaId" tableName="detalle_venta">
+            <column name="fk_detalleventa_1"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="curso04 (generated)" id="1660586586853-13">
+        <createIndex indexName="fk_entrada_sesionId" tableName="entrada">
+            <column name="fk_sesion"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="curso04 (generated)" id="1660586586853-14">
+        <createIndex indexName="fk_sala_sesionId" tableName="sesion">
+            <column name="fk_sala"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="curso04 (generated)" id="1660586586853-15">
+        <createIndex indexName="fk_venta_detalleVentaId" tableName="detalle_venta">
+            <column name="fk_detalleventa_2"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="curso04 (generated)" id="1660586586853-16">
+        <dropTable tableName="hibernate_sequence"/>
+    </changeSet>
+    <changeSet author="curso04 (generated)" id="1660586586853-17">
+        <dropColumn columnName="butacas" tableName="sesion"/>
+    </changeSet>
+    <changeSet author="curso04 (generated)" id="1660586586853-18">
+        <dropColumn columnName="numero_entradas" tableName="venta"/>
+    </changeSet>
+    <changeSet author="curso04 (generated)" id="1660586586853-19">
+        <dropColumn columnName="precio" tableName="venta"/>
+    </changeSet>
+    <changeSet author="curso04 (generated)" id="1660586586853-20">
+        <dropColumn columnName="sala_id" tableName="sesion"/>
+    </changeSet>
+    <changeSet author="curso04 (generated)" id="1660586586853-21">
+        <dropColumn columnName="sala_id" tableName="venta"/>
+    </changeSet>
+    <changeSet author="curso04 (generated)" id="1660586586853-22">
+        <dropColumn columnName="sesion_id" tableName="venta"/>
+    </changeSet>
+    <changeSet author="curso04 (generated)" id="1660586631690-1">
+        <createTable tableName="detalle_venta">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="active" type="BIT(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="importe" type="FLOAT(12)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fk_detalleventa_1" type="BIGINT"/>
+            <column name="fk_detalleventa_2" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="curso04 (generated)" id="1660586631690-2">
+        <createTable tableName="entrada">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="descuento" type="INT"/>
+            <column name="fk_sesion" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="curso04 (generated)" id="1660586631690-3">
+        <createTable tableName="sala">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="capacidad" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="curso04 (generated)" id="1660586631690-4">
+        <addColumn tableName="sesion">
+            <column name="aforo" type="INT(10)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="curso04 (generated)" id="1660586631690-5">
+        <addColumn tableName="venta">
+            <column name="fh_creacion" type="DATETIME"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="curso04 (generated)" id="1660586631690-6">
+        <addColumn tableName="sesion">
+            <column name="duracion_min" type="INT(10)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="curso04 (generated)" id="1660586631690-7">
+        <addColumn tableName="venta">
+            <column name="fh_modificado" type="DATETIME"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="curso04 (generated)" id="1660586631690-8">
+        <addColumn tableName="sesion">
+            <column name="hora_empieza" type="DATETIME"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="curso04 (generated)" id="1660586631690-9">
+        <addColumn tableName="venta">
+            <column name="importe_total" type="FLOAT(12)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="curso04 (generated)" id="1660586631690-10">
+        <addColumn tableName="sesion">
+            <column name="pelicula" type="VARCHAR(255 BYTE)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="curso04 (generated)" id="1660586631690-11">
+        <addColumn tableName="sesion">
+            <column name="fk_sala" type="BIGINT(19)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="curso04 (generated)" id="1660586631690-12">
+        <createIndex indexName="fk_entrada_detalleVentaId" tableName="detalle_venta">
+            <column name="fk_detalleventa_1"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="curso04 (generated)" id="1660586631690-13">
+        <createIndex indexName="fk_entrada_sesionId" tableName="entrada">
+            <column name="fk_sesion"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="curso04 (generated)" id="1660586631690-14">
+        <createIndex indexName="fk_sala_sesionId" tableName="sesion">
+            <column name="fk_sala"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="curso04 (generated)" id="1660586631690-15">
+        <createIndex indexName="fk_venta_detalleVentaId" tableName="detalle_venta">
+            <column name="fk_detalleventa_2"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="curso04 (generated)" id="1660586631690-16">
+        <dropTable tableName="hibernate_sequence"/>
+    </changeSet>
+    <changeSet author="curso04 (generated)" id="1660586631690-17">
+        <dropColumn columnName="butacas" tableName="sesion"/>
+    </changeSet>
+    <changeSet author="curso04 (generated)" id="1660586631690-18">
+        <dropColumn columnName="numero_entradas" tableName="venta"/>
+    </changeSet>
+    <changeSet author="curso04 (generated)" id="1660586631690-19">
+        <dropColumn columnName="precio" tableName="venta"/>
+    </changeSet>
+    <changeSet author="curso04 (generated)" id="1660586631690-20">
+        <dropColumn columnName="sala_id" tableName="sesion"/>
+    </changeSet>
+    <changeSet author="curso04 (generated)" id="1660586631690-21">
+        <dropColumn columnName="sala_id" tableName="venta"/>
+    </changeSet>
+    <changeSet author="curso04 (generated)" id="1660586631690-22">
+        <dropColumn columnName="sesion_id" tableName="venta"/>
+    </changeSet>
+    <changeSet author="curso04 (generated)" id="1660586688542-1">
+        <createTable tableName="detalle_venta">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="active" type="BIT(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="importe" type="FLOAT(12)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fk_detalleventa_1" type="BIGINT"/>
+            <column name="fk_detalleventa_2" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="curso04 (generated)" id="1660586688542-2">
+        <createTable tableName="entrada">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="descuento" type="INT"/>
+            <column name="fk_sesion" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="curso04 (generated)" id="1660586688542-3">
+        <createTable tableName="sala">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="capacidad" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="curso04 (generated)" id="1660586688542-4">
+        <addColumn tableName="sesion">
+            <column name="aforo" type="INT(10)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="curso04 (generated)" id="1660586688542-5">
+        <addColumn tableName="venta">
+            <column name="fh_creacion" type="DATETIME"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="curso04 (generated)" id="1660586688542-6">
+        <addColumn tableName="sesion">
+            <column name="duracion_min" type="INT(10)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="curso04 (generated)" id="1660586688542-7">
+        <addColumn tableName="venta">
+            <column name="fh_modificado" type="DATETIME"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="curso04 (generated)" id="1660586688542-8">
+        <addColumn tableName="sesion">
+            <column name="hora_empieza" type="DATETIME"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="curso04 (generated)" id="1660586688542-9">
+        <addColumn tableName="venta">
+            <column name="importe_total" type="FLOAT(12)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="curso04 (generated)" id="1660586688542-10">
+        <addColumn tableName="sesion">
+            <column name="pelicula" type="VARCHAR(255 BYTE)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="curso04 (generated)" id="1660586688542-11">
+        <addColumn tableName="sesion">
+            <column name="fk_sala" type="BIGINT(19)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="curso04 (generated)" id="1660586688542-12">
+        <createIndex indexName="fk_entrada_detalleVentaId" tableName="detalle_venta">
+            <column name="fk_detalleventa_1"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="curso04 (generated)" id="1660586688542-13">
+        <createIndex indexName="fk_entrada_sesionId" tableName="entrada">
+            <column name="fk_sesion"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="curso04 (generated)" id="1660586688542-14">
+        <createIndex indexName="fk_sala_sesionId" tableName="sesion">
+            <column name="fk_sala"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="curso04 (generated)" id="1660586688542-15">
+        <createIndex indexName="fk_venta_detalleVentaId" tableName="detalle_venta">
+            <column name="fk_detalleventa_2"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="curso04 (generated)" id="1660586688542-16">
+        <dropTable tableName="hibernate_sequence"/>
+    </changeSet>
+    <changeSet author="curso04 (generated)" id="1660586688542-17">
+        <dropColumn columnName="butacas" tableName="sesion"/>
+    </changeSet>
+    <changeSet author="curso04 (generated)" id="1660586688542-18">
+        <dropColumn columnName="numero_entradas" tableName="venta"/>
+    </changeSet>
+    <changeSet author="curso04 (generated)" id="1660586688542-19">
+        <dropColumn columnName="precio" tableName="venta"/>
+    </changeSet>
+    <changeSet author="curso04 (generated)" id="1660586688542-20">
+        <dropColumn columnName="sala_id" tableName="sesion"/>
+    </changeSet>
+    <changeSet author="curso04 (generated)" id="1660586688542-21">
+        <dropColumn columnName="sala_id" tableName="venta"/>
+    </changeSet>
+    <changeSet author="curso04 (generated)" id="1660586688542-22">
+        <dropColumn columnName="sesion_id" tableName="venta"/>
+    </changeSet>
+</databaseChangeLog>

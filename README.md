@@ -16,11 +16,11 @@ Cine que realiza ventas constituidas por entradas, que pueden tener descuentos y
 
 # Requisitos
 ---
-		> Entrada +
+		> Entrada *
 			> Vender *
 			> Devolver -
 		> Descuentos
-			> Por grupo 10% +
+			> Por grupo 10% *
 		> Reportes/listar -
 			> Por sala y sesion -
 			> Por ventas totales -

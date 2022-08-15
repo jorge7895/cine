@@ -3,6 +3,7 @@ package es.cic.grupo09.grupo09ejerc009.service;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -104,11 +105,34 @@ class VentaServiceTest {
 		Venta nuevaVenta1 = ventaService.create(listaEntradas1);
 
 		List<Entrada> listaEntradas2 = initEntradas(nEntradas);
-		Venta nuevaVenta2 = ventaService.create(listaEntradas2);
 
 		listaEntradas1.set(0, listaEntradas2.get(0));
 
 		assertThrows(VentaException.class, () -> ventaService.updateDevolverAll(nuevaVenta1, listaEntradas1));
+	}
+
+	@Test
+	void readBySesionAndSalaTest() {
+		List<Entrada> listaEntradas1 = initEntradas(10);
+		ventaService.create(listaEntradas1);
+		listaEntradas1 = initEntradas(10);
+		ventaService.create(listaEntradas1);
+		listaEntradas1 = initEntradas(10);
+		ventaService.create(listaEntradas1);
+
+		assertTrue(ventaService.readBySesionAndSala(sesiones[0], salas[0]).size() > 0);
+	}
+
+	@Test
+	void readBySesionTest() {
+		List<Entrada> listaEntradas1 = initEntradas(10);
+		ventaService.create(listaEntradas1);
+		listaEntradas1 = initEntradas(10);
+		ventaService.create(listaEntradas1);
+		listaEntradas1 = initEntradas(10);
+		ventaService.create(listaEntradas1);
+
+		assertTrue(ventaService.readBySesion(sesiones[0]).size() > 0);
 	}
 
 	private List<Entrada> initEntradas(int nEntradas) {

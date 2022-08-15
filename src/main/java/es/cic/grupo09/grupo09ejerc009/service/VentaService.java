@@ -1,5 +1,6 @@
 package es.cic.grupo09.grupo09ejerc009.service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +16,8 @@ import org.springframework.stereotype.Service;
 import es.cic.grupo09.grupo09ejerc009.exception.VentaException;
 import es.cic.grupo09.grupo09ejerc009.model.DetalleVenta;
 import es.cic.grupo09.grupo09ejerc009.model.Entrada;
+import es.cic.grupo09.grupo09ejerc009.model.Sala;
+import es.cic.grupo09.grupo09ejerc009.model.Sesion;
 import es.cic.grupo09.grupo09ejerc009.model.Venta;
 import es.cic.grupo09.grupo09ejerc009.repository.VentaRepository;
 
@@ -89,6 +92,23 @@ public class VentaService {
 		venta.setFhModificado(LocalDateTime.now());
 		ventaRepository.save(venta);
 		return venta;
+	}
+
+	public List<Venta> readBySesionAndSala(Sesion sesion, Sala sala) {
+		return ventaRepository.readBySesionAndSala(sesion, sala);
+	}
+
+	public List<Venta> readAll(Sesion sesion, Sala sala) {
+		return (List<Venta>) ventaRepository.findAll();
+	}
+
+	public List<Venta> readByDay(LocalDate dia) {
+		// TODO Falta por hacer
+		throw new UnsupportedOperationException();
+	}
+
+	public List<Venta> readBySesion(Sesion sesion) {
+		return ventaRepository.readBySesion(sesion);
 	}
 
 	private List<DetalleVenta> localizarDetallesCompraByEntradas(List<Entrada> entradas) {

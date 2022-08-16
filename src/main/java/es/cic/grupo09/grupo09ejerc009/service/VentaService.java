@@ -63,7 +63,7 @@ public class VentaService {
 		return ventaRepository.readBySesionAndSala(sesion, sala);
 	}
 
-	public List<Venta> readAll(Sesion sesion, Sala sala) {
+	public List<Venta> readAll() {
 
 		LOGGER.trace(
 				"Utilizando servicio ".concat(getClass().getName()).concat(" para intento de lecturas de ventas."));

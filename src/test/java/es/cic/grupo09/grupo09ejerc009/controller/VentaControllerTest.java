@@ -1,4 +1,4 @@
-package es.cic.grupo09.grupo09ejerc009.integration;
+package es.cic.grupo09.grupo09ejerc009.controller;
 
 import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -37,7 +37,7 @@ import es.cic.grupo09.grupo09ejerc009.util.EnumDescuento;
 @SpringBootTest
 @AutoConfigureMockMvc
 @Transactional
-class VentaIntegrationTest {
+class VentaControllerTest {
 
 	@Autowired
 	private MockMvc mvc;

@@ -20,6 +20,10 @@ public class VentaException extends RuntimeException {
 		super(message);
 		this.venta = venta;
 	}
+	
+	public VentaException(String message) {
+		super(message);
+	}
 
 	public Venta getVenta() {
 		return this.venta;

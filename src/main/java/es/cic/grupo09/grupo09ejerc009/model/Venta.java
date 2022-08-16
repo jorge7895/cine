@@ -31,7 +31,6 @@ public class Venta extends AbstractModel {
 	@NotNull
 	private LocalDateTime fhCreacion;
 
-	@NotNull
 	private LocalDateTime fhModificado;
 
 	@OneToMany(mappedBy = "venta")

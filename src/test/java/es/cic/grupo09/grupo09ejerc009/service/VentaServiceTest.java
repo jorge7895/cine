@@ -62,6 +62,7 @@ class VentaServiceTest {
 		assertThrows(VentaException.class, () -> ventaService.create(initEntradas(nEntradas)));
 	}
 
+	@SuppressWarnings("unchecked")
 	@Test
 	void updateDevolverTodoValidTest() {
 		int nEntradas = 10;
@@ -72,6 +73,7 @@ class VentaServiceTest {
 		assertEquals(0, nuevaVenta.getImporteTotal());
 	}
 
+	@SuppressWarnings("unchecked")
 	@Test
 	void updateDevolverTodoErrorUnaMenosTest() {
 		int nEntradas = 10;
@@ -82,6 +84,7 @@ class VentaServiceTest {
 		assertThrows(VentaException.class, () -> ventaService.updateDevolver(nuevaVenta, listaEntradas));
 	}
 
+	@SuppressWarnings("unchecked")
 	@Test
 	void updateDevolverTodoErrorRemplazoFalsoTest() {
 		int nEntradas = 10;
@@ -95,6 +98,7 @@ class VentaServiceTest {
 		assertThrows(VentaException.class, () -> ventaService.updateDevolver(nuevaVenta, listaEntradas));
 	}
 
+	@SuppressWarnings("unchecked")
 	@Test
 	void updateDevolverTodoErrorRemplazoOtraTest() {
 		int nEntradas = 10;
@@ -106,6 +110,7 @@ class VentaServiceTest {
 		assertThrows(VentaException.class, () -> ventaService.updateDevolver(nuevaVenta1, listaEntradas1));
 	}
 
+	@SuppressWarnings("unchecked")
 	@Test
 	void updateDevolverTodoErrorUnaMasTest() {
 		int nEntradas = 10;
@@ -119,6 +124,7 @@ class VentaServiceTest {
 		assertThrows(VentaException.class, () -> ventaService.updateDevolver(nuevaVenta, listaEntradas));
 	}
 
+	@SuppressWarnings("unchecked")
 	@Test
 	void updateDevolverYAnnadirValidTest() {
 		int nEntradas = 10;
@@ -132,6 +138,7 @@ class VentaServiceTest {
 		assertNotEquals(loQueValia, ventaModificada.getImporteTotal());
 	}
 
+	@SuppressWarnings("unchecked")
 	@Test
 	void updateAnnadirValidTest() {
 		List<Entrada> listaEntradasDevolver = new ArrayList<>();

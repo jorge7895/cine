@@ -4,8 +4,12 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
@@ -14,6 +18,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import es.cic.grupo09.grupo09ejerc009.exception.SesionException;
 import es.cic.grupo09.grupo09ejerc009.exception.VentaException;
 import es.cic.grupo09.grupo09ejerc009.model.DetalleVenta;
 import es.cic.grupo09.grupo09ejerc009.model.Entrada;
@@ -21,6 +26,7 @@ import es.cic.grupo09.grupo09ejerc009.model.Sala;
 import es.cic.grupo09.grupo09ejerc009.model.Sesion;
 import es.cic.grupo09.grupo09ejerc009.model.Venta;
 import es.cic.grupo09.grupo09ejerc009.repository.VentaRepository;
+import es.cic.grupo09.grupo09ejerc009.util.EnumDescuento;
 
 @Service
 @Transactional
@@ -33,6 +39,9 @@ public class VentaService {
 
 	@Autowired
 	private DetalleVentaService detalleVentaService;
+
+	@Autowired
+	private EntradaService entradaService;
 
 	public Venta create(List<Entrada> listaEntradas) {
 
@@ -94,12 +103,12 @@ public class VentaService {
 	}
 
 	@SuppressWarnings("unchecked")
-	public Venta updateDevolver(Venta venta, List<Entrada>... entradas) {
+	public Venta updateDevolver(Long id, List<Entrada>... entradas) {
 
 		LOGGER.trace(
 				"Utilizando servicio ".concat(getClass().getName()).concat(" para intento de modificacion de ventas."));
 
-		Venta ventaAux = ventaRepository.findById(venta.getId()).get();
+		Venta ventaAux = ventaRepository.findById(id).get();
 
 		switch (entradas.length) {
 		case 1:
@@ -135,32 +144,67 @@ public class VentaService {
 	}
 
 	private void crearDetallesVenta(Venta venta, List<Entrada> listaEntradas) {
-		// TODO metodo a mejorar.
-		// La idea seria calcular la capacidad de todas las sesiones de la venta antes
-		// de crear los detalles. Ahora tiene una ñapa que seria el if, pero es
-		// ineficiente
+
+		validatedAforo(listaEntradas);
+		validatedDescuentos(venta, listaEntradas);
+
 		for (Entrada entrada : listaEntradas) {
-			if (entrada.getSesion().getAforo() > 0) {
-				DetalleVenta detalleVenta = new DetalleVenta();
-				switch (entrada.getDescuento()) {
-				case GRUPO:
-					detalleVenta.setImporte(5.0f - (5.0f * 0.1f));
-					break;
-				case JOVEN:
-					detalleVenta.setImporte(5.0f - (5.0f * 0.15f));
-					break;
-				case TERCERA_EDAD:
-					detalleVenta.setImporte(5.0f - (5.0f * 0.25f));
-					break;
-				}
-				detalleVenta.setEntrada(entrada);
-				detalleVenta.setVenta(venta);
-				detalleVenta.setActive(true);
-				detalleVentaService.create(detalleVenta);
-				venta.setImporteTotal(venta.getImporteTotal() + detalleVenta.getImporte());
-			} else {
-				throw new VentaException("Una sesion no esta diponible, sesion llena", venta);
+			DetalleVenta detalleVenta = new DetalleVenta();
+			switch (entrada.getDescuento()) {
+			case GRUPO:
+				detalleVenta.setImporte(5.0f - (5.0f * 0.1f));
+				break;
+			case JOVEN:
+				detalleVenta.setImporte(5.0f - (5.0f * 0.15f));
+				break;
+			case TERCERA_EDAD:
+				detalleVenta.setImporte(5.0f - (5.0f * 0.25f));
+				break;
 			}
+			detalleVenta.setEntrada(entrada);
+			detalleVenta.setVenta(venta);
+			detalleVenta.setActive(true);
+			detalleVentaService.create(detalleVenta);
+			venta.setImporteTotal(venta.getImporteTotal() + detalleVenta.getImporte());
+
+		}
+	}
+
+	private void validatedDescuentos(Venta venta, List<Entrada> listaEntradas) {
+		List<Entrada> listaEntradasCopia = listaEntradas;
+		for (Entrada entrada : listaEntradasCopia) {
+			switch (entrada.getDescuento()) {
+			case JOVEN:
+				listaEntradasCopia.remove(entrada);
+				break;
+			case TERCERA_EDAD:
+				listaEntradasCopia.remove(entrada);
+				break;
+			}
+		}
+		if (listaEntradasCopia.size() < 2) {
+			throw new VentaException("Una sesion esta llena.", venta);
+		}
+	}
+
+	private void validatedAforo(List<Entrada> listaEntradas) {
+		Map<Sesion, Integer> sesionesConAforo = new HashMap<>();
+		for (Entrada entrada : listaEntradas) {
+			if (!sesionesConAforo.containsKey(entrada.getSesion())) {
+				sesionesConAforo.put(entrada.getSesion(), (int) entradaService.comprobarAforoByEntrada(entrada));
+			}
+		}
+		Map<Sesion, Integer> sesionesSolicitas = listaEntradas.stream()
+				.collect(Collectors.groupingBy(e -> e.getSesion(), Collectors.summingInt(e -> 1)));
+
+		sesionesSolicitas.entrySet().forEach(entry -> checkAforo(sesionesConAforo, entry));
+	}
+
+	private void checkAforo(Map<Sesion, Integer> sesionesConAforo, Entry<Sesion, Integer> entry) {
+		int disponibles = sesionesConAforo.get(entry.getKey());
+		int solicito = entry.getValue();
+		if (disponibles < solicito) {
+			throw new SesionException("Una sesion esta llena.", entry.getKey());
 		}
 	}
 

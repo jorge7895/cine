@@ -36,7 +36,7 @@ public class SesionService {
 
 	}
 
-	public Sesion readById(long id) {
+	public Sesion readById(Long id) {
 
 		LOGGER.trace(
 				"Utilizando servicio ".concat(getClass().getName()).concat(" para intento de lectura de sesion."));

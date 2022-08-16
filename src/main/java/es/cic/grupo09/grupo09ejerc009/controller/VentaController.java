@@ -10,10 +10,12 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import es.cic.grupo09.grupo09ejerc009.exception.VentaException;
@@ -45,18 +47,18 @@ public class VentaController {
 	}
 
 	@SuppressWarnings("unchecked")
-	@PutMapping("/devolucion")
-	public ResponseEntity<Venta> updateVenta(@Validated @RequestBody Venta venta,
+	@PutMapping("/devolucion/{ventaId}")
+	public ResponseEntity<List<Entrada>> updateVenta(@PathVariable(name = "ventaId") long ventaId,
 			@Validated @RequestBody List<Entrada> entradas, BindingResult errores) {
 
-		LOGGER.trace("Actaualizando la venta con id: {}", venta.getId());
+		LOGGER.trace("Actaualizando la venta con id: {}", ventaId);
 
 		if (errores.hasErrors()) {
-			throw new VentaException("Error al actualizar la venta", venta);
+			throw new VentaException("Error al actualizar la venta");
 		}
-		ventaService.updateDevolver(venta, entradas);
+		ventaService.updateDevolver(ventaId, entradas);
 
-		return ResponseEntity.status(HttpStatus.ACCEPTED).contentType(MediaType.APPLICATION_JSON).body(venta);
+		return ResponseEntity.status(HttpStatus.ACCEPTED).contentType(MediaType.APPLICATION_JSON).body(entradas);
 
 	}
 }

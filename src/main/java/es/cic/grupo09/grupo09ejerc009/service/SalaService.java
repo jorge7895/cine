@@ -29,7 +29,7 @@ public class SalaService {
 
 	}
 
-	public Sala readById(long id) {
+	public Sala readById(Long id) {
 
 		LOGGER.trace("Utilizando servicio ".concat(getClass().getName()).concat(" para intento de lectura de sala."));
 

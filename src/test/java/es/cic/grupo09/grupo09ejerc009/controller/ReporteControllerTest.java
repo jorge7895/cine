@@ -1,13 +1,10 @@
-package es.cic.grupo09.grupo09ejerc009.integration;
+package es.cic.grupo09.grupo09ejerc009.controller;
 
-import static org.hamcrest.Matchers.is;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,35 +21,33 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import es.cic.grupo09.grupo09ejerc009.model.Entrada;
 import es.cic.grupo09.grupo09ejerc009.model.Sala;
 import es.cic.grupo09.grupo09ejerc009.model.Sesion;
-import es.cic.grupo09.grupo09ejerc009.model.Venta;
 import es.cic.grupo09.grupo09ejerc009.service.VentaService;
 import es.cic.grupo09.grupo09ejerc009.util.EnumDescuento;
 
 @SpringBootTest
 @AutoConfigureMockMvc
 @Transactional
-class VentaIntegrationTest {
+class ReporteControllerTest {
 
 	@Autowired
 	private MockMvc mvc;
 
 	@Autowired
-	private ObjectMapper objectMapper;
-	
-	@Autowired
 	private VentaService ventaService;
 
 	@PersistenceContext
 	private EntityManager em;
-	
-	private static Sala[] salas = new Sala[3];
-	private static Sesion[] sesiones = new Sesion[3];
+
+	@Autowired
+	private ObjectMapper objectMapper;
+
+	private Sala[] salas = new Sala[3];
+	private Sesion[] sesiones = new Sesion[3];
 
 	@BeforeEach
 	void setUp() throws Exception {
@@ -62,38 +57,38 @@ class VentaIntegrationTest {
 	}
 
 	@Test
-	void crearVentaTest() throws JsonProcessingException, Exception {
-		
-		List<Entrada> entradas = initEntradas(10);		
-		
-		mvc.perform(post("/api/v2/venta")
-				.accept(MediaType.APPLICATION_JSON)
-				.contentType(MediaType.APPLICATION_JSON)
-				.content(objectMapper.writeValueAsString(entradas)))
-				.andDo(print())
-				.andExpect(status().isCreated())
-				.andExpect(content().contentType(MediaType.APPLICATION_JSON))
-				.andExpect(jsonPath("$.length()",is(10)));
+	void readVentasBySesionAndSala() throws Exception {
+		ventaService.create(initEntradas(10));
+
+		mvc.perform(get("/api/v2/reporte/{id_sesion}/{id_sala}", sesiones[0].getId(), salas[0].getId())
+				.contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)).andDo(print())
+				.andExpect(status().isAccepted());
 	}
-	
+
 	@Test
-	void updateVentaTest() throws JsonProcessingException, Exception {
-		
-		List<Entrada> entradas = initEntradas(1);
-		entradas.get(0).setDescuento(EnumDescuento.JOVEN);
-		
-		Venta nuevaVenta = ventaService.create(entradas);
-		
-		entradas.get(0).setDescuento(EnumDescuento.TERCERA_EDAD);
-		
-		mvc.perform(put("/api/v2/venta/devolucion/{1}",nuevaVenta.getId())
-				.accept(MediaType.APPLICATION_JSON)
-				.contentType(MediaType.APPLICATION_JSON)
-				.content(objectMapper.writeValueAsString(entradas)))
-				.andDo(print())
-				.andExpect(status().is2xxSuccessful())
-				.andExpect(content().contentType(MediaType.APPLICATION_JSON))
-				.andExpect(jsonPath("$[0].descuento",is("TERCERA_EDAD")));
+	void readVentasBySesion() throws Exception {
+		ventaService.create(initEntradas(10));
+
+		mvc.perform(get("/api/v2/reporte/{id_sesion}", sesiones[0].getId()).contentType(MediaType.APPLICATION_JSON)
+				.accept(MediaType.APPLICATION_JSON)).andDo(print()).andExpect(status().isAccepted());
+	}
+
+	@Test
+	void readVentasByDia() throws Exception {
+		ventaService.create(initEntradas(10));
+
+		LocalDate dia = LocalDate.now();
+		mvc.perform(get("/api/v2/reporte/dia").content(objectMapper.writeValueAsString(dia))
+				.contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)).andDo(print())
+				.andExpect(status().isAccepted());
+	}
+
+	@Test
+	void readVentasTotales() throws Exception {
+		ventaService.create(initEntradas(10));
+
+		mvc.perform(get("/api/v2/reporte/total").contentType(MediaType.APPLICATION_JSON)
+				.accept(MediaType.APPLICATION_JSON)).andDo(print()).andExpect(status().isAccepted());
 	}
 
 	private List<Entrada> initEntradas(int nEntradas) {

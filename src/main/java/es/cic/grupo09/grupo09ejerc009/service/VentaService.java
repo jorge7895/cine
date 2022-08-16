@@ -22,6 +22,7 @@ import es.cic.grupo09.grupo09ejerc009.exception.SesionException;
 import es.cic.grupo09.grupo09ejerc009.exception.VentaException;
 import es.cic.grupo09.grupo09ejerc009.model.DetalleVenta;
 import es.cic.grupo09.grupo09ejerc009.model.Entrada;
+import es.cic.grupo09.grupo09ejerc009.model.Sala;
 import es.cic.grupo09.grupo09ejerc009.model.Sesion;
 import es.cic.grupo09.grupo09ejerc009.model.Venta;
 import es.cic.grupo09.grupo09ejerc009.repository.VentaRepository;
@@ -41,8 +42,10 @@ public class VentaService {
 	@Autowired
 	private EntradaService entradaService;
 
+	@Autowired
 	private SesionService sesionService;
 
+	@Autowired
 	private SalaService salaService;
 
 	public Venta create(List<Entrada> listaEntradas) {
@@ -66,12 +69,15 @@ public class VentaService {
 		return ventaRepository.findById(id).get();
 	}
 
-	public List<Venta> readBySesionAndSala(long sesion, long sala) {
+	public List<Venta> readBySesionAndSala(Long sesion_id, Long sala_id) {
 
 		LOGGER.trace("Utilizando servicio ".concat(getClass().getName())
 				.concat(" para intento de lecturas de ventas filtradas por sesion y sala."));
 
-		return ventaRepository.readBySesionAndSala(sesionService.readById(sesion), salaService.readById(sala));
+		Sesion sesionAux = sesionService.readById(sesion_id);
+		Sala salaAux = salaService.readById(sala_id);
+
+		return ventaRepository.readBySesionAndSala(sesionAux, salaAux);
 	}
 
 	public List<Venta> readAll() {

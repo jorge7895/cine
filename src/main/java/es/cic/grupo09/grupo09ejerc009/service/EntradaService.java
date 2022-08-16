@@ -31,4 +31,8 @@ public class EntradaService {
 
 		return entrada;
 	}
+
+	public Object comprobarAforoByEntrada(Entrada entrada) {
+		return entradaRepository.comprobarAforoByEntrada(entrada.getSesion());
+	}
 }

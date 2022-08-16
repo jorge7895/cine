@@ -10,6 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import es.cic.grupo09.grupo09ejerc009.util.AbstractModel;
 import es.cic.grupo09.grupo09ejerc009.util.EnumDescuento;
@@ -22,8 +23,10 @@ public class Entrada extends AbstractModel {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "fk_sesion", foreignKey = @ForeignKey(name = "fk_entrada_sesionId"))
+	@NotNull
 	private Sesion sesion;
 
+	@NotNull
 	private EnumDescuento descuento;
 
 	@OneToMany(mappedBy = "entrada")

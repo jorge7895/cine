@@ -9,6 +9,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 import es.cic.grupo09.grupo09ejerc009.util.AbstractModel;
 
@@ -22,10 +24,14 @@ public class Venta extends AbstractModel {
 
 	private static final long serialVersionUID = 7212375577490655228L;
 
+	@Min(0)
+	@NotNull
 	private float importeTotal;
 
+	@NotNull
 	private LocalDateTime fhCreacion;
 
+	@NotNull
 	private LocalDateTime fhModificado;
 
 	@OneToMany(mappedBy = "venta")

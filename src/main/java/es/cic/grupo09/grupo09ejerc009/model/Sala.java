@@ -6,6 +6,9 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 import es.cic.grupo09.grupo09ejerc009.util.AbstractModel;
 
@@ -15,6 +18,9 @@ public class Sala extends AbstractModel {
 
 	private static final long serialVersionUID = 4073218442416202924L;
 
+	@Min(1)
+	@Max(100)
+	@NotNull
 	private int capacidad;
 
 	@OneToMany(mappedBy = "sala")

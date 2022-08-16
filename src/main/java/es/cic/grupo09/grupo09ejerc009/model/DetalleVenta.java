@@ -6,6 +6,8 @@ import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 import es.cic.grupo09.grupo09ejerc009.util.AbstractModel;
 
@@ -17,15 +19,24 @@ public class DetalleVenta extends AbstractModel {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "fk_detalleventa_1", foreignKey = @ForeignKey(name = "fk_entrada_detalleVentaId"))
+	@NotNull
 	private Entrada entrada;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "fk_detalleventa_2", foreignKey = @ForeignKey(name = "fk_venta_detalleVentaId"))
+	@NotNull
 	private Venta venta;
 
+	@Min(0)
+	@NotNull
 	private float importe;
 
+	@NotNull
 	private boolean active;
+
+	public DetalleVenta() {
+		active = true;
+	}
 
 	public Entrada getEntrada() {
 		return entrada;

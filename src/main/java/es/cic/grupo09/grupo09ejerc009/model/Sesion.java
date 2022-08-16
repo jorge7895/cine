@@ -11,6 +11,9 @@ import javax.persistence.ForeignKey;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 import es.cic.grupo09.grupo09ejerc009.util.AbstractModel;
 
@@ -22,14 +25,21 @@ public class Sesion extends AbstractModel {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "fk_sala", foreignKey = @ForeignKey(name = "fk_sala_sesionId"))
+	@NotNull
 	private Sala sala;
 
+	@NotNull
 	private String pelicula;
 
+	@Min(1)
+	@Max(100)
+	@NotNull
 	private int aforo;
 
+	@NotNull
 	private LocalDateTime horaEmpieza;
 
+	@NotNull
 	private int duracionMin;
 
 	@OneToMany(mappedBy = "sesion")

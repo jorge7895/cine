@@ -33,10 +33,10 @@ Cine que realiza ventas constituidas por entradas, que pueden tener descuentos y
 		> Modificaciones en las ventas *
 			> Poder devolver parte de las entrads y coger de otra sesion *
 			> Poder comprar entradas de diferentes sesiones con los descuentos igualemente, no acomulables +
-	   > Descuentos *
-           > Por grupo 10% *
-           > Por joven 15% *
-			 > Por 3ªEdad 25% *
+		> Descuentos *
+			> Por grupo 10% *
+			> Por joven 15% *
+			> Por 3ªEdad 25% *
  
 # Integrantes
 ---

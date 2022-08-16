@@ -28,4 +28,12 @@ public class SalaService {
 		return salaRepository.findById(sala.getId()).get();
 
 	}
+
+	public Sala readById(long id) {
+
+		LOGGER.trace("Utilizando servicio ".concat(getClass().getName()).concat(" para intento de lectura de sala."));
+
+		return salaRepository.findById(id).get();
+
+	}
 }

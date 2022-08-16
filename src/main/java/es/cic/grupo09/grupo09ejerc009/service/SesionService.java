@@ -36,6 +36,15 @@ public class SesionService {
 
 	}
 
+	public Sesion readById(long id) {
+
+		LOGGER.trace(
+				"Utilizando servicio ".concat(getClass().getName()).concat(" para intento de lectura de sesion."));
+
+		return sesionRepository.findById(id).get();
+
+	}
+
 	public List<Sesion> readAll() {
 
 		LOGGER.trace(

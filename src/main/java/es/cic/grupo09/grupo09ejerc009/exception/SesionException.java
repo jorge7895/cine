@@ -11,21 +11,26 @@ public class SesionException extends RuntimeException {
 
 	private final long sesionId;
 	private Sesion sesion;
-	
+
 	public SesionException(String message, Throwable cause, long sesionId) {
 		super(message, cause);
 		this.sesionId = sesionId;
 	}
 
-	public SesionException( long sesionId, String message) {
+	public SesionException(long sesionId, String message) {
 		super(message);
 		this.sesionId = sesionId;
 	}
-	
+
 	public SesionException(String mensaje, Sesion sesion) {
 		super(mensaje);
 		this.sesionId = sesion.getId();
 		this.sesion = sesion;
+	}
+
+	public SesionException(String mensaje, long sesion) {
+		super(mensaje);
+		this.sesionId = sesion;
 	}
 
 	public long getSesionId() {
@@ -36,9 +41,9 @@ public class SesionException extends RuntimeException {
 	public String getMessage() {
 		return String.format("%s en la sesion %d", super.getMessage(), sesionId);
 	}
-	
+
 	public Sesion getSesion() {
 		return this.sesion;
 	}
-	
+
 }

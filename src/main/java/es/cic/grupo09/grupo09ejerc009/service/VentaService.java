@@ -22,11 +22,9 @@ import es.cic.grupo09.grupo09ejerc009.exception.SesionException;
 import es.cic.grupo09.grupo09ejerc009.exception.VentaException;
 import es.cic.grupo09.grupo09ejerc009.model.DetalleVenta;
 import es.cic.grupo09.grupo09ejerc009.model.Entrada;
-import es.cic.grupo09.grupo09ejerc009.model.Sala;
 import es.cic.grupo09.grupo09ejerc009.model.Sesion;
 import es.cic.grupo09.grupo09ejerc009.model.Venta;
 import es.cic.grupo09.grupo09ejerc009.repository.VentaRepository;
-import es.cic.grupo09.grupo09ejerc009.util.EnumDescuento;
 
 @Service
 @Transactional
@@ -42,6 +40,10 @@ public class VentaService {
 
 	@Autowired
 	private EntradaService entradaService;
+
+	private SesionService sesionService;
+
+	private SalaService salaService;
 
 	public Venta create(List<Entrada> listaEntradas) {
 
@@ -64,12 +66,12 @@ public class VentaService {
 		return ventaRepository.findById(id).get();
 	}
 
-	public List<Venta> readBySesionAndSala(Sesion sesion, Sala sala) {
+	public List<Venta> readBySesionAndSala(long sesion, long sala) {
 
 		LOGGER.trace("Utilizando servicio ".concat(getClass().getName())
 				.concat(" para intento de lecturas de ventas filtradas por sesion y sala."));
 
-		return ventaRepository.readBySesionAndSala(sesion, sala);
+		return ventaRepository.readBySesionAndSala(sesionService.readById(sesion), salaService.readById(sala));
 	}
 
 	public List<Venta> readAll() {
@@ -93,12 +95,12 @@ public class VentaService {
 
 	}
 
-	public List<Venta> readBySesion(Sesion sesion) {
+	public List<Venta> readBySesion(long sesion) {
 
 		LOGGER.trace("Utilizando servicio ".concat(getClass().getName())
 				.concat(" para intento de lecturas de ventas filtradas por sesion."));
 
-		return ventaRepository.readBySesion(sesion);
+		return ventaRepository.readBySesion(sesionService.readById(sesion));
 
 	}
 
@@ -146,7 +148,7 @@ public class VentaService {
 	private void crearDetallesVenta(Venta venta, List<Entrada> listaEntradas) {
 
 		validatedAforo(listaEntradas);
-		validatedDescuentos(venta, listaEntradas);
+//		validatedDescuentos(venta, listaEntradas);
 
 		for (Entrada entrada : listaEntradas) {
 			DetalleVenta detalleVenta = new DetalleVenta();
@@ -174,6 +176,9 @@ public class VentaService {
 		List<Entrada> listaEntradasCopia = listaEntradas;
 		for (Entrada entrada : listaEntradasCopia) {
 			switch (entrada.getDescuento()) {
+			case GRUPO:
+
+				break;
 			case JOVEN:
 				listaEntradasCopia.remove(entrada);
 				break;

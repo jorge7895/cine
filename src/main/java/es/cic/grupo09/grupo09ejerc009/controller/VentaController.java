@@ -15,12 +15,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import es.cic.grupo09.grupo09ejerc009.exception.VentaException;
 import es.cic.grupo09.grupo09ejerc009.model.Entrada;
-import es.cic.grupo09.grupo09ejerc009.model.Venta;
 import es.cic.grupo09.grupo09ejerc009.service.VentaService;
 
 @RestController

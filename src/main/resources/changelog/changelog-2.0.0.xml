@@ -1,0 +1,85 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <changeSet author="curso04 (generated)" id="1660585487956-1">
+        <createTable tableName="detalle_venta">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="active" type="BIT(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="importe" type="FLOAT(12)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fk_detalleventa_1" type="BIGINT"/>
+            <column name="fk_detalleventa_2" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="curso04 (generated)" id="1660585487956-2">
+        <createTable tableName="entrada">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="descuento" type="INT"/>
+            <column name="fk_sesion" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="curso04 (generated)" id="1660585487956-3">
+        <createTable tableName="sala">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="capacidad" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="curso04 (generated)" id="1660585487956-4">
+        <createTable tableName="sesion">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="aforo" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="duracion_min" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="hora_empieza" type="datetime"/>
+            <column name="pelicula" type="VARCHAR(255)"/>
+            <column name="fk_sala" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="curso04 (generated)" id="1660585487956-5">
+        <createTable tableName="venta">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="fh_creacion" type="datetime"/>
+            <column name="fh_modificado" type="datetime"/>
+            <column name="importe_total" type="FLOAT(12)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="curso04 (generated)" id="1660585487956-6">
+        <createIndex indexName="fk_entrada_detalleVentaId" tableName="detalle_venta">
+            <column name="fk_detalleventa_1"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="curso04 (generated)" id="1660585487956-7">
+        <createIndex indexName="fk_entrada_sesionId" tableName="entrada">
+            <column name="fk_sesion"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="curso04 (generated)" id="1660585487956-8">
+        <createIndex indexName="fk_sala_sesionId" tableName="sesion">
+            <column name="fk_sala"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="curso04 (generated)" id="1660585487956-9">
+        <createIndex indexName="fk_venta_detalleVentaId" tableName="detalle_venta">
+            <column name="fk_detalleventa_2"/>
+        </createIndex>
+    </changeSet>
+</databaseChangeLog>

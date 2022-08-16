@@ -8,12 +8,12 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 
-	<groupId>es.cic.grupo09</groupId>
-	<artifactId>grupo09ejerc009</artifactId>
-	<version>2.0.0</version>
+	<groupId>es.cic.curso03</groupId>
+	<artifactId>curso03-ejerc012</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
 
-	<name>Cine</name>
-	<description>Ejercicio del cine Nº 14 del curso de formacion de CIC impartido por Juan Antonio Losada</description>
+	<name>curso03-ejerc012</name>
+	<description>Project for Spring Boot</description>
 
 	<properties>
 		<java.version>11</java.version>

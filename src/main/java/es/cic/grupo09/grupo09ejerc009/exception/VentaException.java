@@ -1,10 +1,11 @@
-package es.cic.grupo09.grupo09ejerc009.service;
+package es.cic.grupo09.grupo09ejerc009.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import es.cic.grupo09.grupo09ejerc009.model.Venta;
 
+@SuppressWarnings("serial")
 @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
 public class VentaException extends RuntimeException {
 
@@ -18,6 +19,10 @@ public class VentaException extends RuntimeException {
 	public VentaException(String message, Venta venta) {
 		super(message);
 		this.venta = venta;
+	}
+	
+	public VentaException(String message) {
+		super(message);
 	}
 
 	public Venta getVenta() {

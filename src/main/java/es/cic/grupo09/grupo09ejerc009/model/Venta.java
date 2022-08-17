@@ -1,10 +1,10 @@
 package es.cic.grupo09.grupo09ejerc009.model;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -32,9 +32,10 @@ public class Venta extends AbstractModel {
 	private LocalDateTime fhCreacion;
 
 	private LocalDateTime fhModificado;
-
-	@OneToMany(mappedBy = "venta")
-	private List<DetalleVenta> detalleVentaVenta = new ArrayList<>();
+	
+	@OneToMany(fetch = FetchType.LAZY)
+	@NotNull(message = "Es necesaria al menos una entrada")
+	private Set<Entrada> entrada;
 
 	public float getImporteTotal() {
 		return importeTotal;
@@ -60,12 +61,12 @@ public class Venta extends AbstractModel {
 		this.fhModificado = fhModificado;
 	}
 
-	public List<DetalleVenta> getDetalleVentaVenta() {
-		return detalleVentaVenta;
+	public Set<Entrada> getEntrada() {
+		return entrada;
 	}
 
-	public void setDetalleVentaVenta(List<DetalleVenta> detalleVentaVenta) {
-		this.detalleVentaVenta = detalleVentaVenta;
+	public void setEntrada(Set<Entrada> entrada) {
+		this.entrada = entrada;
 	}
 
 }

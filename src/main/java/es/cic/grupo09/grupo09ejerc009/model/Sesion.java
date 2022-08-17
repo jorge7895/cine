@@ -6,8 +6,6 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ForeignKey;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -24,7 +22,6 @@ public class Sesion extends AbstractModel {
 	private static final long serialVersionUID = 4073218442416202924L;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "fk_sala", foreignKey = @ForeignKey(name = "fk_sala_sesionId"))
 	@NotNull
 	private Sala sala;
 

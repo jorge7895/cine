@@ -1,19 +1,15 @@
 package es.cic.grupo09.grupo09ejerc009.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import es.cic.grupo09.grupo09ejerc009.util.AbstractModel;
-import es.cic.grupo09.grupo09ejerc009.util.EnumDescuento;
+import es.cic.grupo09.grupo09ejerc009.util.TipoEntrada;
 
 @Entity
 @Table(name = "ENTRADA")
@@ -27,10 +23,7 @@ public class Entrada extends AbstractModel {
 	private Sesion sesion;
 
 	@NotNull
-	private EnumDescuento descuento;
-
-	@OneToMany(mappedBy = "entrada")
-	private List<DetalleVenta> detalleVentaEntrada = new ArrayList<>();
+	private TipoEntrada descuento;
 
 	public Sesion getSesion() {
 		return sesion;
@@ -40,20 +33,12 @@ public class Entrada extends AbstractModel {
 		this.sesion = sesion;
 	}
 
-	public EnumDescuento getDescuento() {
+	public TipoEntrada getDescuento() {
 		return descuento;
 	}
 
-	public void setDescuento(EnumDescuento descuento) {
+	public void setDescuento(TipoEntrada descuento) {
 		this.descuento = descuento;
-	}
-
-	public List<DetalleVenta> getDetalleVentaEntrada() {
-		return detalleVentaEntrada;
-	}
-
-	public void setDetalleVentaEntrada(List<DetalleVenta> detalleVentaEntrada) {
-		this.detalleVentaEntrada = detalleVentaEntrada;
 	}
 
 }

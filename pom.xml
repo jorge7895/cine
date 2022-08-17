@@ -16,7 +16,7 @@
 	<description>Ejercicio del cine Nº 14 del curso de formacion de CIC impartido por Juan Antonio Losada</description>
 
 	<properties>
-		<java.version>11</java.version>
+		<java.version>17</java.version>
 	</properties>
 
 	<dependencies>

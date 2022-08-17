@@ -8,7 +8,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
@@ -19,7 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import es.cic.grupo09.grupo09ejerc009.exception.SesionException;
-import es.cic.grupo09.grupo09ejerc009.exception.VentaException;
 import es.cic.grupo09.grupo09ejerc009.model.DetalleVenta;
 import es.cic.grupo09.grupo09ejerc009.model.Entrada;
 import es.cic.grupo09.grupo09ejerc009.model.Sala;
@@ -36,8 +34,8 @@ public class VentaService {
 	@Autowired
 	private VentaRepository ventaRepository;
 
-	@Autowired
-	private DetalleVentaService detalleVentaService;
+//	@Autowired
+//	private DetalleVentaService detalleVentaService;
 
 	@Autowired
 	private EntradaService entradaService;
@@ -137,65 +135,45 @@ public class VentaService {
 
 	private List<DetalleVenta> localizarDetallesCompraByEntradas(List<Entrada> entradas) {
 		List<DetalleVenta> supuestaVenta = new ArrayList<>();
-		for (Entrada supuestaEntrada : entradas) {
-			DetalleVenta supuestaDetalleVenta;
-			try {
-				supuestaDetalleVenta = detalleVentaService.localizarEntrada(supuestaEntrada);
-			} catch (Exception e) {
-				throw new VentaException("La entrada no concuerda con la venta", new Venta());
-			}
-			if (!Objects.equals(supuestaDetalleVenta, null)) {
-				supuestaVenta.add(supuestaDetalleVenta);
-			}
-		}
+//		for (Entrada supuestaEntrada : entradas) {
+//			DetalleVenta supuestaDetalleVenta;
+//			try {
+//				supuestaDetalleVenta = detalleVentaService.localizarEntrada(supuestaEntrada);
+//			} catch (Exception e) {
+//				throw new VentaException("La entrada no concuerda con la venta", new Venta());
+//			}
+//			if (!Objects.equals(supuestaDetalleVenta, null)) {
+//				supuestaVenta.add(supuestaDetalleVenta);
+//			}
+//		}
 		return supuestaVenta;
 	}
 
 	private void crearDetallesVenta(Venta venta, List<Entrada> listaEntradas) {
 
-		validatedAforo(listaEntradas);
+//		validatedAforo(listaEntradas);
 //		validatedDescuentos(venta, listaEntradas);
-
-		for (Entrada entrada : listaEntradas) {
-			DetalleVenta detalleVenta = new DetalleVenta();
-			switch (entrada.getDescuento()) {
-			case GRUPO:
-				detalleVenta.setImporte(5.0f - (5.0f * 0.1f));
-				break;
-			case JOVEN:
-				detalleVenta.setImporte(5.0f - (5.0f * 0.15f));
-				break;
-			case TERCERA_EDAD:
-				detalleVenta.setImporte(5.0f - (5.0f * 0.25f));
-				break;
-			}
-			detalleVenta.setEntrada(entrada);
-			detalleVenta.setVenta(venta);
-			detalleVenta.setActive(true);
-			detalleVentaService.create(detalleVenta);
-			venta.setImporteTotal(venta.getImporteTotal() + detalleVenta.getImporte());
-
-		}
-	}
-
-	private void validatedDescuentos(Venta venta, List<Entrada> listaEntradas) {
-		List<Entrada> listaEntradasCopia = listaEntradas;
-		for (Entrada entrada : listaEntradasCopia) {
-			switch (entrada.getDescuento()) {
-			case GRUPO:
-
-				break;
-			case JOVEN:
-				listaEntradasCopia.remove(entrada);
-				break;
-			case TERCERA_EDAD:
-				listaEntradasCopia.remove(entrada);
-				break;
-			}
-		}
-		if (listaEntradasCopia.size() < 2) {
-			throw new VentaException("Una sesion esta llena.", venta);
-		}
+//
+//		for (Entrada entrada : listaEntradas) {
+//			DetalleVenta detalleVenta = new DetalleVenta();
+//			switch (entrada.getDescuento()) {
+//			case GRUPO:
+//				detalleVenta.setImporte(5.0f - (5.0f * 0.1f));
+//				break;
+//			case JOVEN:
+//				detalleVenta.setImporte(5.0f - (5.0f * 0.15f));
+//				break;
+//			case TERCERA_EDAD:
+//				detalleVenta.setImporte(5.0f - (5.0f * 0.25f));
+//				break;
+//			}
+//			detalleVenta.setEntrada(entrada);
+//			detalleVenta.setVenta(venta);
+//			detalleVenta.setActive(true);
+//			detalleVentaService.create(detalleVenta);
+//			venta.setImporteTotal(venta.getImporteTotal() + detalleVenta.getImporte());
+//
+//		}
 	}
 
 	private void validatedAforo(List<Entrada> listaEntradas) {
@@ -220,14 +198,14 @@ public class VentaService {
 	}
 
 	private void devolverEntradas(Venta ventaAux, List<Entrada> entradas) {
-		if (detalleVentaService.localizarEntradas(ventaAux).size() != entradas.size()) {
-			throw new VentaException("El numero de entradas no concuerda con la venta entera", ventaAux);
-		}
-		for (DetalleVenta detalleVenta : localizarDetallesCompraByEntradas(entradas)) {
-			ventaAux.setImporteTotal(ventaAux.getImporteTotal() - detalleVenta.getImporte());
-			detalleVenta.getEntrada().getSesion().setAforo(detalleVenta.getEntrada().getSesion().getAforo() + 1);
-			detalleVenta.setActive(false);
-			detalleVentaService.update(detalleVenta);
-		}
+//		if (detalleVentaService.localizarEntradas(ventaAux).size() != entradas.size()) {
+//			throw new VentaException("El numero de entradas no concuerda con la venta entera", ventaAux);
+//		}
+//		for (DetalleVenta detalleVenta : localizarDetallesCompraByEntradas(entradas)) {
+//			ventaAux.setImporteTotal(ventaAux.getImporteTotal() - detalleVenta.getImporte());
+//			detalleVenta.getEntrada().getSesion().setAforo(detalleVenta.getEntrada().getSesion().getAforo() + 1);
+//			detalleVenta.setActive(false);
+//			detalleVentaService.update(detalleVenta);
+//		}
 	}
 }

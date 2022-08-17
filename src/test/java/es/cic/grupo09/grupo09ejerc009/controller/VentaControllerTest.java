@@ -32,7 +32,7 @@ import es.cic.grupo09.grupo09ejerc009.model.Sala;
 import es.cic.grupo09.grupo09ejerc009.model.Sesion;
 import es.cic.grupo09.grupo09ejerc009.model.Venta;
 import es.cic.grupo09.grupo09ejerc009.service.VentaService;
-import es.cic.grupo09.grupo09ejerc009.util.EnumDescuento;
+import es.cic.grupo09.grupo09ejerc009.util.TipoEntrada;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -80,11 +80,11 @@ class VentaControllerTest {
 	void updateVentaTest() throws JsonProcessingException, Exception {
 		
 		List<Entrada> entradas = initEntradas(1);
-		entradas.get(0).setDescuento(EnumDescuento.JOVEN);
+		entradas.get(0).setDescuento(TipoEntrada.JOVEN);
 		
 		Venta nuevaVenta = ventaService.create(entradas);
 		
-		entradas.get(0).setDescuento(EnumDescuento.TERCERA_EDAD);
+		entradas.get(0).setDescuento(TipoEntrada.TERCERA_EDAD);
 		
 		mvc.perform(put("/api/v2/venta/devolucion/{1}",nuevaVenta.getId())
 				.accept(MediaType.APPLICATION_JSON)
@@ -103,13 +103,13 @@ class VentaControllerTest {
 			auxEntrada.setSesion(sesiones[(int) (Math.random() * sesiones.length)]);
 			switch ((int) (Math.random() * 3)) {
 			case 0:
-				auxEntrada.setDescuento(EnumDescuento.GRUPO);
+				auxEntrada.setDescuento(TipoEntrada.GRUPO);
 				break;
 			case 1:
-				auxEntrada.setDescuento(EnumDescuento.JOVEN);
+				auxEntrada.setDescuento(TipoEntrada.JOVEN);
 				break;
 			case 2:
-				auxEntrada.setDescuento(EnumDescuento.TERCERA_EDAD);
+				auxEntrada.setDescuento(TipoEntrada.TERCERA_EDAD);
 				break;
 			}
 			listaEntradasVenta.add(auxEntrada);

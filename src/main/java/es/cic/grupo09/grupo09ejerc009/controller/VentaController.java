@@ -31,7 +31,7 @@ public class VentaController {
 	private VentaService ventaService;
 
 	@PostMapping
-	public ResponseEntity<List<Entrada>> crearVenta(@Validated @RequestBody List<Entrada> entradas,
+	public ResponseEntity<List<Entrada>> crearVenta(@RequestBody List<Entrada> entradas,
 			BindingResult errores) {
 
 		LOGGER.trace("Creando una venta nueva cantidad: {}", entradas.size());

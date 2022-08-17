@@ -17,14 +17,14 @@ public class Sala extends AbstractModel {
 	@Min(1)
 	@Max(100)
 	@NotNull
-	private int capacidad;
+	private int aforo;
 
-	public int getCapacidad() {
-		return capacidad;
+	public int getAforo() {
+		return aforo;
 	}
 
-	public void setCapacidad(int capacidad) {
-		this.capacidad = capacidad;
+	public void setAforo(int aforo) {
+		this.aforo = aforo;
 	}
 
 }

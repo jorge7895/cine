@@ -31,10 +31,10 @@ class DescuentoUtilTest {
 		initEntradas(7, TipoEntrada.NORMAL);
 		cut.validarDescuentos(listaEntradas);
 		
-		assertEquals(7, listaEntradas.stream().filter(n -> n.getDescuento().equals(TipoEntrada.GRUPO)).count());
-		assertEquals(5, listaEntradas.stream().filter(n -> n.getDescuento().equals(TipoEntrada.JOVEN)).count());
-		assertEquals(0, listaEntradas.stream().filter(n -> n.getDescuento().equals(TipoEntrada.NORMAL)).count());
-		assertEquals(0, listaEntradas.stream().filter(n -> n.getDescuento().equals(TipoEntrada.TERCERA_EDAD)).count());
+		assertEquals(7, listaEntradas.stream().filter(n -> n.getTipoEntrada().equals(TipoEntrada.GRUPO)).count());
+		assertEquals(5, listaEntradas.stream().filter(n -> n.getTipoEntrada().equals(TipoEntrada.JOVEN)).count());
+		assertEquals(0, listaEntradas.stream().filter(n -> n.getTipoEntrada().equals(TipoEntrada.NORMAL)).count());
+		assertEquals(0, listaEntradas.stream().filter(n -> n.getTipoEntrada().equals(TipoEntrada.SENIOR)).count());
 	}
 	
 	@Test
@@ -44,10 +44,10 @@ class DescuentoUtilTest {
 		initEntradas(5, TipoEntrada.NORMAL);
 		cut.validarDescuentos(listaEntradas);
 		
-		assertEquals(5, listaEntradas.stream().filter(n -> n.getDescuento().equals(TipoEntrada.GRUPO)).count());
-		assertEquals(5, listaEntradas.stream().filter(n -> n.getDescuento().equals(TipoEntrada.JOVEN)).count());
-		assertEquals(0, listaEntradas.stream().filter(n -> n.getDescuento().equals(TipoEntrada.NORMAL)).count());
-		assertEquals(0, listaEntradas.stream().filter(n -> n.getDescuento().equals(TipoEntrada.TERCERA_EDAD)).count());
+		assertEquals(5, listaEntradas.stream().filter(n -> n.getTipoEntrada().equals(TipoEntrada.GRUPO)).count());
+		assertEquals(5, listaEntradas.stream().filter(n -> n.getTipoEntrada().equals(TipoEntrada.JOVEN)).count());
+		assertEquals(0, listaEntradas.stream().filter(n -> n.getTipoEntrada().equals(TipoEntrada.NORMAL)).count());
+		assertEquals(0, listaEntradas.stream().filter(n -> n.getTipoEntrada().equals(TipoEntrada.SENIOR)).count());
 	}
 	
 	@Test
@@ -57,10 +57,10 @@ class DescuentoUtilTest {
 		initEntradas(4, TipoEntrada.NORMAL);
 		cut.validarDescuentos(listaEntradas);
 		
-		assertEquals(0, listaEntradas.stream().filter(n -> n.getDescuento().equals(TipoEntrada.GRUPO)).count());
-		assertEquals(5, listaEntradas.stream().filter(n -> n.getDescuento().equals(TipoEntrada.JOVEN)).count());
-		assertEquals(4, listaEntradas.stream().filter(n -> n.getDescuento().equals(TipoEntrada.NORMAL)).count());
-		assertEquals(0, listaEntradas.stream().filter(n -> n.getDescuento().equals(TipoEntrada.TERCERA_EDAD)).count());
+		assertEquals(0, listaEntradas.stream().filter(n -> n.getTipoEntrada().equals(TipoEntrada.GRUPO)).count());
+		assertEquals(5, listaEntradas.stream().filter(n -> n.getTipoEntrada().equals(TipoEntrada.JOVEN)).count());
+		assertEquals(4, listaEntradas.stream().filter(n -> n.getTipoEntrada().equals(TipoEntrada.NORMAL)).count());
+		assertEquals(0, listaEntradas.stream().filter(n -> n.getTipoEntrada().equals(TipoEntrada.SENIOR)).count());
 	}
 
 	private void initEntradas(int nEntradas, TipoEntrada tipoEntrada) {
@@ -68,7 +68,7 @@ class DescuentoUtilTest {
 		Entrada entrada = new Entrada();
 
 		for (int i = 0; i < nEntradas; i++) {
-			entrada.setDescuento(tipoEntrada);
+			entrada.setTipoEntrada(tipoEntrada);
 			this.listaEntradas.add(entrada);
 		}
 	}

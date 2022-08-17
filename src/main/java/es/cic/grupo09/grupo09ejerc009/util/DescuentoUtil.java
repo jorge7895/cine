@@ -9,13 +9,13 @@ public class DescuentoUtil {
 	public void validarDescuentos(List<Entrada> listaEntradas) {
 		
 		long normales = listaEntradas.stream()
-		.filter(n -> (n.getDescuento() == TipoEntrada.NORMAL))
+		.filter(n -> (n.getTipoEntrada() == TipoEntrada.NORMAL))
 		.count();
 		
 		if(normales >= 5) {
 			listaEntradas.stream()
-			.filter(n -> (n.getDescuento() == TipoEntrada.NORMAL))
-			.forEach(n -> n.setDescuento(TipoEntrada.GRUPO));
+			.filter(n -> (n.getTipoEntrada() == TipoEntrada.NORMAL))
+			.forEach(n -> n.setTipoEntrada(TipoEntrada.GRUPO));
 		}
 	}
 }

@@ -25,7 +25,7 @@ import es.cic.grupo09.grupo09ejerc009.exception.SesionException;
 import es.cic.grupo09.grupo09ejerc009.exception.VentaException;
 import es.cic.grupo09.grupo09ejerc009.model.Entrada;
 import es.cic.grupo09.grupo09ejerc009.model.Sala;
-import es.cic.grupo09.grupo09ejerc009.model.Sesion;
+import es.cic.grupo09.grupo09ejerc009.model.Proyeccion;
 import es.cic.grupo09.grupo09ejerc009.model.Venta;
 import es.cic.grupo09.grupo09ejerc009.util.TipoEntrada;
 
@@ -40,7 +40,7 @@ class VentaServiceTest {
 	private VentaService ventaService;
 
 	private static Sala[] salas = new Sala[3];
-	private static Sesion[] sesiones = new Sesion[3];
+	private static Proyeccion[] sesiones = new Proyeccion[3];
 
 	@BeforeEach
 	void setUp() throws Exception {
@@ -235,7 +235,7 @@ class VentaServiceTest {
 	private void initSesiones(String... pelicula) {
 
 		for (int i = 0; i < sesiones.length; i++) {
-			sesiones[i] = new Sesion();
+			sesiones[i] = new Proyeccion();
 			sesiones[i].setSala(salas[(int) (Math.random() * salas.length)]);
 			sesiones[i].setAforo(sesiones[i].getSala().getCapacidad());
 			sesiones[i].setPelicula(pelicula[i]);

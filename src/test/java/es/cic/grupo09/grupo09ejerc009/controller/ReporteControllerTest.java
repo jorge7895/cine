@@ -25,7 +25,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import es.cic.grupo09.grupo09ejerc009.model.Entrada;
 import es.cic.grupo09.grupo09ejerc009.model.Sala;
-import es.cic.grupo09.grupo09ejerc009.model.Sesion;
+import es.cic.grupo09.grupo09ejerc009.model.Proyeccion;
 import es.cic.grupo09.grupo09ejerc009.service.VentaService;
 import es.cic.grupo09.grupo09ejerc009.util.TipoEntrada;
 
@@ -47,7 +47,7 @@ class ReporteControllerTest {
 	private ObjectMapper objectMapper;
 
 	private Sala[] salas = new Sala[3];
-	private Sesion[] sesiones = new Sesion[3];
+	private Proyeccion[] sesiones = new Proyeccion[3];
 
 	@BeforeEach
 	void setUp() throws Exception {
@@ -135,7 +135,7 @@ class ReporteControllerTest {
 	private void initSesiones(String... pelicula) {
 
 		for (int i = 0; i < sesiones.length; i++) {
-			sesiones[i] = new Sesion();
+			sesiones[i] = new Proyeccion();
 			sesiones[i].setSala(salas[(int) (Math.random() * salas.length)]);
 			sesiones[i].setAforo(sesiones[i].getSala().getCapacidad());
 			sesiones[i].setPelicula(pelicula[i]);

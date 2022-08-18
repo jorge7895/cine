@@ -1,13 +1,11 @@
 package es.cic.grupo09.grupo09ejerc009.model;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -17,7 +15,7 @@ import es.cic.grupo09.grupo09ejerc009.util.AbstractModel;
 
 @Entity
 @Table(name = "SESION")
-public class Sesion extends AbstractModel {
+public class Proyeccion extends AbstractModel {
 
 	private static final long serialVersionUID = 4073218442416202924L;
 
@@ -31,16 +29,18 @@ public class Sesion extends AbstractModel {
 	@Min(1)
 	@Max(100)
 	@NotNull
-	private int aforo;
+	private int entradasVendidas;
 
 	@NotNull
 	private LocalDateTime horaEmpieza;
-
+	
 	@NotNull
+	private LocalDate fechaApertura;
+	
+	@NotNull
+	private LocalDate fechaCierre;
+	
 	private int duracionMin;
-
-	@OneToMany(mappedBy = "sesion")
-	private List<Entrada> entradaSesion = new ArrayList<>();
 
 	public Sala getSala() {
 		return sala;
@@ -56,14 +56,6 @@ public class Sesion extends AbstractModel {
 
 	public void setPelicula(String pelicula) {
 		this.pelicula = pelicula;
-	}
-
-	public int getAforo() {
-		return aforo;
-	}
-
-	public void setAforo(int aforo) {
-		this.aforo = aforo;
 	}
 
 	public LocalDateTime getHoraEmpieza() {
@@ -82,12 +74,28 @@ public class Sesion extends AbstractModel {
 		this.duracionMin = duracionMin;
 	}
 
-	public List<Entrada> getEntradaSesion() {
-		return entradaSesion;
+	public int getEntradasVendidas() {
+		return entradasVendidas;
 	}
 
-	public void setEntradaSesion(List<Entrada> entradaSesion) {
-		this.entradaSesion = entradaSesion;
+	public void setEntradasVendidas(int entradasVendidas) {
+		this.entradasVendidas = entradasVendidas;
+	}
+
+	public LocalDate getFechaApertura() {
+		return fechaApertura;
+	}
+
+	public void setFechaApertura(LocalDate fechaApertura) {
+		this.fechaApertura = fechaApertura;
+	}
+
+	public LocalDate getFechaCierre() {
+		return fechaCierre;
+	}
+
+	public void setFechaCierre(LocalDate fechaCierre) {
+		this.fechaCierre = fechaCierre;
 	}
 
 }

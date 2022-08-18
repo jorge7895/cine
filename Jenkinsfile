@@ -2,7 +2,7 @@ pipeline {
     agent any
     tools {
     	maven "Maven inicial"
-    	jdk 'OpenJDK 11 inicial'
+    	jdk 'OpenJDK 17 inicial'
     }
     stages {
     	stage('CompilaciÃ³n y ejecuciÃ³n de test') {

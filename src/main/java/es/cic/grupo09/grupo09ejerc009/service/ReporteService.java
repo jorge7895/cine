@@ -1,5 +1,7 @@
 package es.cic.grupo09.grupo09ejerc009.service;
 
+import java.time.LocalDateTime;
+
 import javax.transaction.Transactional;
 
 import org.apache.logging.log4j.LogManager;
@@ -27,6 +29,33 @@ public class ReporteService {
 				"Utilizando servicio {}, {}",getClass().getName()," para intento de lecturas de ventas.");
 
 		return reporteDao.findAll(pageable);
+
+	}
+	
+	public Page<Entrada> reporteVentasPorDia(LocalDateTime dia, Pageable pageable) {
+
+		LOGGER.trace(
+				"Utilizando servicio {}, {}",getClass().getName()," para intento de lecturas de ventas.");
+
+		return reporteDao.readByDiaDeVenta(dia, pageable);
+
+	}
+	
+	public Page<Entrada> reporteVentasPorProyeccion(long idSesion, Pageable pageable) {
+
+		LOGGER.trace(
+				"Utilizando servicio {}, {}",getClass().getName()," para intento de lecturas de ventas.");
+
+		return reporteDao.readByProyeccion(idSesion, pageable);
+
+	}
+	
+	public Page<Entrada> reporteVentasPorSesionSala(long idProyeccion, long idSala, Pageable pageable) {
+
+		LOGGER.trace(
+				"Utilizando servicio {}, {}",getClass().getName()," para intento de lecturas de ventas.");
+
+		return reporteDao.readBySesionSala(idProyeccion, idSala, pageable);
 
 	}
 }

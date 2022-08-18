@@ -9,18 +9,19 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import es.cic.grupo09.grupo09ejerc009.model.Entrada;
-import es.cic.grupo09.grupo09ejerc009.util.DescuentoUtil;
+import es.cic.grupo09.grupo09ejerc009.model.Venta;
 import es.cic.grupo09.grupo09ejerc009.util.TipoEntrada;
+import es.cic.grupo09.grupo09ejerc009.util.VentaUtil;
 
-class DescuentoUtilTest {
+class VentaUtilTest {
 
-	private DescuentoUtil cut;
+	private VentaUtil cut;
 	private List<Entrada> listaEntradas;
 	
 	@BeforeEach
 	void setUp() throws Exception {
 		
-		cut = new DescuentoUtil();
+		cut = new VentaUtil();
 		listaEntradas = new ArrayList<Entrada>();
 	}
 
@@ -61,6 +62,58 @@ class DescuentoUtilTest {
 		assertEquals(5, listaEntradas.stream().filter(n -> n.getTipoEntrada().equals(TipoEntrada.JOVEN)).count());
 		assertEquals(4, listaEntradas.stream().filter(n -> n.getTipoEntrada().equals(TipoEntrada.NORMAL)).count());
 		assertEquals(0, listaEntradas.stream().filter(n -> n.getTipoEntrada().equals(TipoEntrada.SENIOR)).count());
+	}
+	
+	@Test
+	void actualizarImporteVentaJovenTest() {
+		
+		Venta venta = new Venta();
+		
+		Entrada entrada = new Entrada();
+		entrada.setTipoEntrada(TipoEntrada.JOVEN);
+		entrada.setVenta(venta);
+		cut.actualizarImporteVenta(entrada);
+		
+		assertEquals(4.25f, entrada.getVenta().getImporteTotal());
+	}
+	
+	@Test
+	void actualizarImporteVentaSeniorTest() {
+		
+		Venta venta = new Venta();
+		
+		Entrada entrada = new Entrada();
+		entrada.setTipoEntrada(TipoEntrada.SENIOR);
+		entrada.setVenta(venta);
+		cut.actualizarImporteVenta(entrada);
+		
+		assertEquals(3.75f, entrada.getVenta().getImporteTotal());
+	}
+	
+	@Test
+	void actualizarImporteVentaGrupoTest() {
+		
+		Venta venta = new Venta();
+		
+		Entrada entrada = new Entrada();
+		entrada.setTipoEntrada(TipoEntrada.GRUPO);
+		entrada.setVenta(venta);
+		cut.actualizarImporteVenta(entrada);
+		
+		assertEquals(4.5f, entrada.getVenta().getImporteTotal());
+	}
+	
+	@Test
+	void actualizarImporteVentaNormalTest() {
+		
+		Venta venta = new Venta();
+		
+		Entrada entrada = new Entrada();
+		entrada.setTipoEntrada(TipoEntrada.NORMAL);
+		entrada.setVenta(venta);
+		cut.actualizarImporteVenta(entrada);
+		
+		assertEquals(5f, entrada.getVenta().getImporteTotal());
 	}
 
 	private void initEntradas(int nEntradas, TipoEntrada tipoEntrada) {

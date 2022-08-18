@@ -1,5 +1,6 @@
 package es.cic.grupo09.grupo09ejerc009.model;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
@@ -30,9 +31,14 @@ public class Proyeccion extends AbstractModel {
 	@NotNull
 	private int entradasVendidas;
 
-//	@NotNull
+	@NotNull
 	private LocalDateTime horaEmpieza;
-
+	
+	@NotNull
+	private LocalDate fechaApertura;
+	
+	@NotNull
+	private LocalDate fechaCierre;
 	
 	private int duracionMin;
 
@@ -74,6 +80,22 @@ public class Proyeccion extends AbstractModel {
 
 	public void setEntradasVendidas(int entradasVendidas) {
 		this.entradasVendidas = entradasVendidas;
+	}
+
+	public LocalDate getFechaApertura() {
+		return fechaApertura;
+	}
+
+	public void setFechaApertura(LocalDate fechaApertura) {
+		this.fechaApertura = fechaApertura;
+	}
+
+	public LocalDate getFechaCierre() {
+		return fechaCierre;
+	}
+
+	public void setFechaCierre(LocalDate fechaCierre) {
+		this.fechaCierre = fechaCierre;
 	}
 
 }

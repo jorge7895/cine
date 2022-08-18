@@ -27,6 +27,8 @@ public class Entrada extends AbstractModel {
 
 	@NotNull
 	private TipoEntrada tipoEntrada;
+	
+	private boolean activa;
 
 	public Proyeccion getProyeccion() {
 		return proyeccion;
@@ -54,6 +56,14 @@ public class Entrada extends AbstractModel {
 
 	public int getPrecioEntrada() {
 		return PRECIO_ENTRADA;
+	}
+
+	public boolean isActiva() {
+		return activa;
+	}
+
+	public void setActiva(boolean activa) {
+		this.activa = activa;
 	}
 
 }

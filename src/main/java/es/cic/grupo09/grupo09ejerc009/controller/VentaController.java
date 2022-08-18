@@ -10,14 +10,15 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import es.cic.grupo09.grupo09ejerc009.exception.VentaException;
 import es.cic.grupo09.grupo09ejerc009.model.Entrada;
 import es.cic.grupo09.grupo09ejerc009.service.VentaService;
 
@@ -44,17 +45,22 @@ public class VentaController {
 		return ResponseEntity.status(HttpStatus.CREATED).contentType(MediaType.APPLICATION_JSON).body(entradas);
 	}
 
-	@SuppressWarnings("unchecked")
-	@PutMapping("/devolucion/{ventaId}")
-	public ResponseEntity<List<Entrada>> updateVenta(@PathVariable(name = "ventaId") long ventaId,
-			@Validated @RequestBody List<Entrada> entradas, BindingResult errores) {
+	@DeleteMapping("/devolucion")
+	@ResponseStatus(code = HttpStatus.OK)
+	public void deleteVenta(@RequestParam long idVenta) {
+
+		LOGGER.trace("Actaualizando la venta con id: {}", idVenta);
+
+		ventaService.devolver(idVenta);
+	}
+	
+	@PutMapping("/modificacion")
+	public ResponseEntity<List<Entrada>> updateVenta(@RequestParam long ventaId, @Validated @RequestBody List<Entrada> entradas) {
 
 		LOGGER.trace("Actaualizando la venta con id: {}", ventaId);
 
-		if (errores.hasErrors()) {
-			throw new VentaException("Error al actualizar la venta");
-		}
-		ventaService.updateDevolver(ventaId, entradas);
+		
+		ventaService.modificarVenta(ventaId, entradas);
 
 		return ResponseEntity.status(HttpStatus.ACCEPTED).contentType(MediaType.APPLICATION_JSON).body(entradas);
 

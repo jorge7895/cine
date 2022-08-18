@@ -1,6 +1,5 @@
 package es.cic.grupo09.grupo09ejerc009.service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -11,9 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import es.cic.grupo09.grupo09ejerc009.model.Entrada;
-import es.cic.grupo09.grupo09ejerc009.model.Venta;
 import es.cic.grupo09.grupo09ejerc009.repository.EntradaDAO;
 import es.cic.grupo09.grupo09ejerc009.repository.VentaDAO;
+import es.cic.grupo09.grupo09ejerc009.util.VentaUtil;
 
 @Service
 @Transactional
@@ -26,61 +25,35 @@ public class VentaService {
 	
 	@Autowired
 	private EntradaDAO entradaDao;
+	
+	private VentaUtil ventaUtil = new VentaUtil();
 
 	public List<Entrada> create(List<Entrada> listaEntradas) {
 
-		LOGGER.trace("Utilizando servicio {} {}", getClass().getName()," para intento de creacion de venta.");
+		LOGGER.trace("Utilizando servicio {} {}", getClass().getName()," para intento de creacion de la venta.");
 
-		listaEntradas.stream().forEach(e -> actualizarImporteVenta(e));
+		ventaUtil.validarDescuentos(listaEntradas);
+		listaEntradas.stream()
+			.forEach(e -> ventaUtil.actualizarImporteVenta(e));
 
 		return entradaDao.saveAll(listaEntradas);
 	}
-
-	public void actualizarImporteVenta(Entrada entrada) {
-		
-		float importeTotalActual = entrada.getVenta().getImporteTotal();
-		
-		switch (entrada.getTipoEntrada()) {
-		case SENIOR:
-				importeTotalActual -= (entrada.getPrecioEntrada() * 0.25f);
-				entrada.getVenta().setImporteTotal(importeTotalActual);
-			break;
-		case JOVEN:
-			importeTotalActual -= (entrada.getPrecioEntrada() * 0.15f);
-			entrada.getVenta().setImporteTotal(importeTotalActual);
-		break;
-		case GRUPO:
-			importeTotalActual -= (entrada.getPrecioEntrada() * 0.1f);
-			entrada.getVenta().setImporteTotal(importeTotalActual);
-		break;
-		default:
-			entrada.getVenta().setImporteTotal(importeTotalActual);
-			break;
-		}
-	}
 	
-	@SuppressWarnings("unchecked")
-	public Venta updateDevolver(Long id, List<Entrada>... entradas) {
+	public void devolver(long venta) {
 
 		LOGGER.trace(
-				"Utilizando servicio ".concat(getClass().getName()).concat(" para intento de modificacion de ventas."));
+				"Utilizando servicio {}, {}",getClass().getName()," para eliminar la venta.");
 
-		Venta ventaAux = ventaDao.findById(id).get();
-
-		switch (entradas.length) {
-		case 1:
-//			devolverEntradas(ventaAux, entradas[0]);
-			break;
-		case 2:
-//			devolverEntradas(ventaAux, entradas[0]);
-			
-			break;
-		}
-
-		ventaAux.setFhModificado(LocalDateTime.now());
-		ventaDao.save(ventaAux);
-
-		return ventaAux;
-
+		ventaDao.deleteById(venta);
+	}
+	
+	public List<Entrada> modificarVenta(long ventaId, List<Entrada> entradas) {
+		
+		LOGGER.trace(
+				"Utilizando servicio {}, {}",getClass().getName(), "para intento de modificacion de la venta.");
+		
+		devolver(ventaId);
+		
+		return create(entradas);
 	}
 }

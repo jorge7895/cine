@@ -53,16 +53,19 @@ class ReporteIntegrationTest {
 		fecha = LocalDateTime.of(2022, Month.JULY, 10, 10, 30);
 		
 		sala = new Sala();
-		sala.setAforo(100);
+		sala.setAforo(50);
+		sala.setButacasFila(5);
+		sala.setFilas(10);
 		em.persist(sala);
 		
 		proyeccion = new Proyeccion();
 		proyeccion.setDuracionMin(120);
-		proyeccion.setPelicula("El señor de los gramillos");
-		proyeccion.setEntradasVendidas(proyeccion.getEntradasVendidas()+1);
-		proyeccion.setHoraEmpieza(LocalDateTime.now());
+		proyeccion.setEntradasVendidas(0);
+		proyeccion.setSesion(1);
 		proyeccion.setFechaApertura(LocalDate.of(2022, Month.SEPTEMBER, 10));
 		proyeccion.setFechaCierre(LocalDate.of(2022, Month.OCTOBER, 10));
+		proyeccion.setHoraProyeccion(LocalDateTime.of(2022, Month.SEPTEMBER, 11, 17, 00));
+		proyeccion.setPelicula("La dura vida del programador");
 		proyeccion.setSala(sala);
 		em.persist(proyeccion);
 		
@@ -76,12 +79,14 @@ class ReporteIntegrationTest {
 		entrada.setTipoEntrada(TipoEntrada.SENIOR);
 		entrada.setProyeccion(proyeccion);
 		entrada.setVenta(venta);
+		entrada.setButaca(55);
 		em.persist(entrada);
 		
 		entrada2 = new Entrada();
 		entrada2.setTipoEntrada(TipoEntrada.NORMAL);
 		entrada2.setProyeccion(proyeccion);
 		entrada2.setVenta(venta);
+		entrada.setButaca(55);
 		em.persist(entrada2);
 	}
 

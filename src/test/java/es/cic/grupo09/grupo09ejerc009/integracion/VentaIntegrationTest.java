@@ -58,25 +58,27 @@ class VentaIntegrationTest {
 	void setUp()  {
 		
 		sala = new Sala();
-		sala.setAforo(100);
+		sala.setAforo(50);
+		sala.setButacasFila(5);
+		sala.setFilas(10);
 		em.persist(sala);
 		
 		proyeccion = new Proyeccion();
 		proyeccion.setDuracionMin(120);
-		proyeccion.setPelicula("El señor de los gramillos");
-		proyeccion.setEntradasVendidas(proyeccion.getEntradasVendidas()+1);
-		proyeccion.setHoraEmpieza(LocalDateTime.now());
-		proyeccion.setFechaApertura(LocalDate.now());
-		proyeccion.setFechaCierre(LocalDate.of(2022, Month.SEPTEMBER, 10));
+		proyeccion.setEntradasVendidas(0);
+		proyeccion.setSesion(1);
+		proyeccion.setFechaApertura(LocalDate.of(2022, Month.SEPTEMBER, 10));
+		proyeccion.setFechaCierre(LocalDate.of(2022, Month.OCTOBER, 10));
+		proyeccion.setHoraProyeccion(LocalDateTime.of(2022, Month.SEPTEMBER, 11, 17, 00));
+		proyeccion.setPelicula("La dura vida del programador");
 		proyeccion.setSala(sala);
 		em.persist(proyeccion);
 		
 		venta = new Venta();
 		venta.setImporteTotal(5);
-		venta.setDiaDeVenta(LocalDateTime.now());
+		venta.setDiaDeVenta(LocalDateTime.of(2022, Month.SEPTEMBER, 11, 17, 00));
+		venta.setActiva(true);
 		em.persist(venta);
-		
-
 	}
 	
 	@Test
@@ -86,6 +88,9 @@ class VentaIntegrationTest {
 		entrada.setTipoEntrada(TipoEntrada.SENIOR);
 		entrada.setProyeccion(proyeccion);
 		entrada.setVenta(venta);
+		entrada.setButaca(5);
+		entrada.setFila(2);
+		entrada.setActiva(true);
 		
 		List<Entrada> entradas = new ArrayList<>();
 		entradas.add(entrada);
@@ -109,6 +114,9 @@ class VentaIntegrationTest {
 		entrada.setTipoEntrada(TipoEntrada.JOVEN);
 		entrada.setProyeccion(proyeccion);
 		entrada.setVenta(venta);
+		entrada.setButaca(5);
+		entrada.setFila(2);
+		entrada.setActiva(true);
 		
 		List<Entrada> entradas = new ArrayList<>();
 		entradas.add(entrada);
@@ -132,6 +140,9 @@ class VentaIntegrationTest {
 		entrada.setTipoEntrada(TipoEntrada.JOVEN);
 		entrada.setProyeccion(proyeccion);
 		entrada.setVenta(venta);
+		entrada.setButaca(5);
+		entrada.setFila(2);
+		entrada.setActiva(true);
 		em.persist(entrada);
 		
 		StringBuilder idVenta = new StringBuilder();
@@ -150,12 +161,17 @@ class VentaIntegrationTest {
 		entradaOriginal.setTipoEntrada(TipoEntrada.SENIOR);
 		entradaOriginal.setProyeccion(proyeccion);
 		entradaOriginal.setVenta(venta);
+		entradaOriginal.setButaca(5);
+		entradaOriginal.setFila(2);
+		entradaOriginal.setActiva(true);
 		em.persist(entradaOriginal);
 		
 		Entrada entradaModificada = new Entrada();
 		entradaModificada.setTipoEntrada(TipoEntrada.JOVEN);
-		proyeccion.setPelicula("La dura vida del programador V.O.");
 		entradaModificada.setProyeccion(proyeccion);
+		entradaModificada.setButaca(3);
+		entradaOriginal.setFila(2);
+		entradaModificada.setActiva(true);
 		entradaModificada.setVenta(venta);
 		
 		List<Entrada> entradas = new ArrayList<>();
@@ -170,7 +186,7 @@ class VentaIntegrationTest {
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(entradas)))
 				.andExpect(status().is2xxSuccessful())
-				.andExpect(jsonPath("$.[0].proyeccion.pelicula",is("La dura vida del programador V.O.")))
+				.andExpect(jsonPath("$.[0].proyeccion.pelicula",is("La dura vida del programador")))
 				.andExpect(jsonPath("$.[0].venta.importeTotal",is(4.25)))
 				.andDo(print());
 	}

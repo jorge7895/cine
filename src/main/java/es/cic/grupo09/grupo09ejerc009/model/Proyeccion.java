@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -14,7 +15,7 @@ import javax.validation.constraints.NotNull;
 import es.cic.grupo09.grupo09ejerc009.util.AbstractModel;
 
 @Entity
-@Table(name = "SESION")
+@Table(uniqueConstraints ={@UniqueConstraint(name = "UniqueProyeccion", columnNames = { "sala_id", "sesion", "horaProyeccion" })})
 public class Proyeccion extends AbstractModel {
 
 	private static final long serialVersionUID = 4073218442416202924L;
@@ -26,13 +27,15 @@ public class Proyeccion extends AbstractModel {
 	@NotNull
 	private String pelicula;
 
-	@Min(1)
-	@Max(100)
 	@NotNull
 	private int entradasVendidas;
 
 	@NotNull
-	private LocalDateTime horaEmpieza;
+	private LocalDateTime horaProyeccion;
+	
+	@Min(0)
+	@Max(3)
+	private int sesion;
 	
 	@NotNull
 	private LocalDate fechaApertura;
@@ -58,12 +61,12 @@ public class Proyeccion extends AbstractModel {
 		this.pelicula = pelicula;
 	}
 
-	public LocalDateTime getHoraEmpieza() {
-		return horaEmpieza;
+	public LocalDateTime getHoraProyeccion() {
+		return horaProyeccion;
 	}
 
-	public void setHoraEmpieza(LocalDateTime horaEmpieza) {
-		this.horaEmpieza = horaEmpieza;
+	public void setHoraProyeccion(LocalDateTime horaProyeccion) {
+		this.horaProyeccion = horaProyeccion;
 	}
 
 	public int getDuracionMin() {
@@ -96,6 +99,14 @@ public class Proyeccion extends AbstractModel {
 
 	public void setFechaCierre(LocalDate fechaCierre) {
 		this.fechaCierre = fechaCierre;
+	}
+
+	public int getSesion() {
+		return sesion;
+	}
+
+	public void setSesion(int sesion) {
+		this.sesion = sesion;
 	}
 
 }

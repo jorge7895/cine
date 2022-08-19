@@ -67,4 +67,14 @@ public class VentaUtil {
 		}
 		
 	}
+	
+	public void actualizarDisponibles(Entrada entrada) {
+		int entradasVendidas = entrada.getProyeccion().getEntradasVendidas();
+		int aforoSala = entrada.getProyeccion().getSala().getAforo();
+		
+		if (entradasVendidas >= aforoSala) {
+			throw new VentaException("Aforo Completo");
+		}
+		entrada.getProyeccion().setEntradasVendidas(entradasVendidas++);
+	}
 }

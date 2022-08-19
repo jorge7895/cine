@@ -40,8 +40,9 @@ public class VentaService {
 				ventaUtil.actualizarImporteVenta(e);
 				ventaUtil.validarProyeccion(e);
 				ventaUtil.validarButacaFila(e);
+				ventaUtil.actualizarDisponibles(e);
 			});
-
+		
 		return entradaDao.saveAll(listaEntradas);
 	}
 	

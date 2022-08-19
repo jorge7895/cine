@@ -190,4 +190,30 @@ class VentaIntegrationTest {
 				.andExpect(jsonPath("$.[0].venta.importeTotal",is(4.25)))
 				.andDo(print());
 	}
+	
+	@Test
+	void testCrearVentaAforoLleno() throws JsonProcessingException, Exception {
+		
+		proyeccion.setEntradasVendidas(50);
+		
+		Entrada entrada = new Entrada();
+		entrada.setTipoEntrada(TipoEntrada.JOVEN);
+		entrada.setProyeccion(proyeccion);
+		entrada.setVenta(venta);
+		entrada.setButaca(5);
+		entrada.setFila(2);
+		entrada.setActiva(true);
+		
+		List<Entrada> entradas = new ArrayList<>();
+		entradas.add(entrada);
+		
+		 
+		
+		mvc.perform(post("/api/v2/venta")
+				.accept(MediaType.APPLICATION_JSON)
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(objectMapper.writeValueAsString(entradas)))
+				.andExpect(status().is5xxServerError())
+				.andDo(print());
+	}
 }

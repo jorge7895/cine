@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import es.cic.grupo09.grupo09ejerc009.exception.ProyeccionException;
 import es.cic.grupo09.grupo09ejerc009.model.Proyeccion;
 import es.cic.grupo09.grupo09ejerc009.service.ProyeccionService;
 
@@ -19,7 +20,7 @@ import es.cic.grupo09.grupo09ejerc009.service.ProyeccionService;
 @RequestMapping(path = "/api/v2/proyeccion")
 public class ProyeccionesController {
 	
-	private Logger LOGGER = LogManager.getLogger(ProyeccionesController.class);
+	private Logger logger = LogManager.getLogger(ProyeccionesController.class);
 
 	@Autowired
 	private ProyeccionService proyeccionService;
@@ -27,10 +28,10 @@ public class ProyeccionesController {
 	@PostMapping
 	public ResponseEntity<Proyeccion> crearProyeccion(@RequestBody Proyeccion proyeccion, BindingResult errores) {
 
-		LOGGER.trace("Creando una proyeccion nueva para la pelicula: {}", proyeccion.getPelicula());
+		logger.trace("Creando una proyeccion nueva para la pelicula: {}", proyeccion.getPelicula());
 
 		if (errores.hasErrors()) {
-			throw new RuntimeException("Error al crear la venta");
+			throw new ProyeccionException(proyeccion.getId(),"Error al crear la proyeccion");
 		}
 		proyeccionService.crearProyeccion(proyeccion);
 

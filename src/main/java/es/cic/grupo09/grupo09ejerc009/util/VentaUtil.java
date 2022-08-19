@@ -50,7 +50,7 @@ public class VentaUtil {
 		LocalDate fechaCierre = entrada.getProyeccion().getFechaCierre();
 		LocalDate fechaVenta = entrada.getVenta().getDiaDeVenta().toLocalDate();
 		
-		if (fechaVenta.isBefore(fechaApertura) | fechaVenta.isAfter(fechaCierre)) {
+		if (fechaVenta.isBefore(fechaApertura) || fechaVenta.isAfter(fechaCierre)) {
 			throw new VentaException("La proyección todavía no esta abierta a para venta");
 		}
 	}
@@ -62,7 +62,7 @@ public class VentaUtil {
 		int filasDisponibles = entrada.getProyeccion().getSala().getFilas();
 		int butacasFilaDisponibles = entrada.getProyeccion().getSala().getButacasFila();
 		
-		if (butaca > butacasFilaDisponibles | fila > filasDisponibles) {
+		if (butaca > butacasFilaDisponibles || fila > filasDisponibles) {
 			throw new VentaException("La selección de asiento no es correcta para la sala");
 		}
 		
@@ -75,6 +75,7 @@ public class VentaUtil {
 		if (entradasVendidas >= aforoSala) {
 			throw new VentaException("Aforo Completo");
 		}
-		entrada.getProyeccion().setEntradasVendidas(entradasVendidas++);
+		entradasVendidas++;
+		entrada.getProyeccion().setEntradasVendidas(entradasVendidas);
 	}
 }

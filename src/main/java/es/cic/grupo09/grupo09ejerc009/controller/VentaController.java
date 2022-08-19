@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import es.cic.grupo09.grupo09ejerc009.exception.VentaException;
 import es.cic.grupo09.grupo09ejerc009.model.Entrada;
 import es.cic.grupo09.grupo09ejerc009.service.VentaService;
 
@@ -26,7 +27,7 @@ import es.cic.grupo09.grupo09ejerc009.service.VentaService;
 @RequestMapping(path = "/api/v2/venta")
 public class VentaController {
 
-	private Logger LOGGER = LogManager.getLogger(VentaController.class);
+	private Logger logger = LogManager.getLogger(VentaController.class);
 
 	@Autowired
 	private VentaService ventaService;
@@ -35,10 +36,10 @@ public class VentaController {
 	public ResponseEntity<List<Entrada>> crearVenta(@RequestBody List<Entrada> entradas,
 			BindingResult errores) {
 
-		LOGGER.trace("Creando una venta nueva cantidad: {}", entradas.size());
+		logger.trace("Creando una venta nueva cantidad: {}", entradas.size());
 
 		if (errores.hasErrors()) {
-			throw new RuntimeException("Error al crear la venta");
+			throw new VentaException("Error al crear la venta, datos incorrectos");
 		}
 		this.ventaService.create(entradas);
 
@@ -49,7 +50,7 @@ public class VentaController {
 	@ResponseStatus(code = HttpStatus.OK)
 	public void deleteVenta(@RequestParam long idVenta) {
 
-		LOGGER.trace("Actaualizando la venta con id: {}", idVenta);
+		logger.trace("Actaualizando la venta con id: {}", idVenta);
 
 		ventaService.devolver(idVenta);
 	}
@@ -57,7 +58,7 @@ public class VentaController {
 	@PutMapping("/modificacion")
 	public ResponseEntity<List<Entrada>> updateVenta(@RequestParam long ventaId, @Validated @RequestBody List<Entrada> entradas) {
 
-		LOGGER.trace("Actaualizando la venta con id: {}", ventaId);
+		logger.trace("Actaualizando la venta con id: {}", ventaId);
 
 		
 		ventaService.modificarVenta(ventaId, entradas);

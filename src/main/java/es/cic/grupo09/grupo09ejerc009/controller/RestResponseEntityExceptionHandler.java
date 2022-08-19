@@ -12,7 +12,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import es.cic.grupo09.grupo09ejerc009.exception.SalaException;
-import es.cic.grupo09.grupo09ejerc009.exception.SesionException;
+import es.cic.grupo09.grupo09ejerc009.exception.ProyeccionException;
 import es.cic.grupo09.grupo09ejerc009.exception.VentaException;
 
 @ControllerAdvice
@@ -53,7 +53,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
 				request);
 	}
 	
-	@ExceptionHandler(value = { SesionException.class })
+	@ExceptionHandler(value = { ProyeccionException.class })
 	protected ResponseEntity<Object> handleConflict6(RuntimeException ex, WebRequest request) {
 		String bodyOfResponse = ex.getMessage();
 		return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR,

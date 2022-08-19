@@ -9,7 +9,7 @@ import es.cic.grupo09.grupo09ejerc009.model.Venta;
 @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
 public class VentaException extends RuntimeException {
 
-	private Venta venta;
+	private final Venta venta;
 
 	public VentaException(String message, Throwable cause, Venta venta) {
 		super(message, cause);
@@ -22,7 +22,9 @@ public class VentaException extends RuntimeException {
 	}
 	
 	public VentaException(String message) {
+		
 		super(message);
+		this.venta = new Venta();
 	}
 
 	public Venta getVenta() {

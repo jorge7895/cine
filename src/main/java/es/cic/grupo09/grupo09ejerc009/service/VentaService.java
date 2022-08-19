@@ -18,7 +18,7 @@ import es.cic.grupo09.grupo09ejerc009.util.VentaUtil;
 @Transactional
 public class VentaService {
 
-	private Logger LOGGER = LogManager.getLogger(VentaService.class);
+	private Logger logger = LogManager.getLogger(VentaService.class);
 
 	@Autowired
 	private VentaDAO ventaDao;
@@ -30,7 +30,7 @@ public class VentaService {
 
 	public List<Entrada> create(List<Entrada> listaEntradas) {
 
-		LOGGER.trace("Utilizando servicio {} {}", getClass().getName()," para intento de creacion de la venta.");
+		logger.trace("Utilizando servicio {} {}", getClass().getName()," para intento de creacion de la venta.");
 
 		
 		ventaUtil.validarDescuentos(listaEntradas);
@@ -48,7 +48,7 @@ public class VentaService {
 	
 	public void devolver(long venta) {
 
-		LOGGER.trace(
+		logger.trace(
 				"Utilizando servicio {}, {}",getClass().getName()," para eliminar la venta.");
 
 		ventaDao.deleteVenta(venta);
@@ -56,7 +56,7 @@ public class VentaService {
 	
 	public List<Entrada> modificarVenta(long ventaId, List<Entrada> entradas) {
 		
-		LOGGER.trace(
+		logger.trace(
 				"Utilizando servicio {}, {}",getClass().getName(), "para intento de modificacion de la venta.");
 		
 		devolver(ventaId);

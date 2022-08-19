@@ -17,7 +17,7 @@ public class Entrada extends AbstractModel {
 	//probar venta_id
 	private static final long serialVersionUID = -5046366033882313433L;
 	
-	private final int PRECIO_ENTRADA = 5;
+	private static final int precioEntrada = 5;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@NotNull
@@ -63,7 +63,7 @@ public class Entrada extends AbstractModel {
 	}
 
 	public int getPrecioEntrada() {
-		return PRECIO_ENTRADA;
+		return precioEntrada;
 	}
 
 	public boolean isActiva() {

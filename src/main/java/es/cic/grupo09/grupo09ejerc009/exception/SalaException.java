@@ -3,29 +3,22 @@ package es.cic.grupo09.grupo09ejerc009.exception;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import es.cic.grupo09.grupo09ejerc009.model.Sala;
+
 @SuppressWarnings("serial")
-@ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
+@ResponseStatus(value = HttpStatus.BAD_REQUEST)
 public class SalaException extends RuntimeException {
 
-	private final int salaId;
-	
-	public SalaException(String message, Throwable cause, int salaId) {
-		super(message, cause);
-		this.salaId = salaId;
-	}
+	private final Sala sala;
 
-	public SalaException(String message, int salaId) {
+	public SalaException(String message, Sala sala) {
 		super(message);
-		this.salaId = salaId;
-	}
-
-	public int getSalaId() {
-		return salaId;
+		this.sala = sala;
 	}
 
 	@Override
 	public String getMessage() {
-		return String.format("%s en la sala %d", super.getMessage(), salaId);
+		return String.format("%s en la sala %s", super.getMessage(), sala.toString());
 	}
 	
 	

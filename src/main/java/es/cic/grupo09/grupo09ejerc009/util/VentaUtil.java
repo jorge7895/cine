@@ -3,6 +3,8 @@ package es.cic.grupo09.grupo09ejerc009.util;
 import java.time.LocalDate;
 import java.util.List;
 
+import es.cic.grupo09.grupo09ejerc009.exception.ProyeccionException;
+import es.cic.grupo09.grupo09ejerc009.exception.SalaException;
 import es.cic.grupo09.grupo09ejerc009.exception.VentaException;
 import es.cic.grupo09.grupo09ejerc009.model.Entrada;
 
@@ -51,7 +53,7 @@ public class VentaUtil {
 		LocalDate fechaVenta = entrada.getVenta().getDiaDeVenta().toLocalDate();
 		
 		if (fechaVenta.isBefore(fechaApertura) || fechaVenta.isAfter(fechaCierre)) {
-			throw new VentaException("La proyección todavía no esta abierta a para venta");
+			throw new ProyeccionException("La proyección todavía no esta abierta a para venta", entrada.getProyeccion());
 		}
 	}
 	
@@ -63,7 +65,7 @@ public class VentaUtil {
 		int butacasFilaDisponibles = entrada.getProyeccion().getSala().getButacasFila();
 		
 		if (butaca > butacasFilaDisponibles || fila > filasDisponibles) {
-			throw new VentaException("La selección de asiento no es correcta para la sala");
+			throw new VentaException("La selección de asiento no es correcta para la sala", entrada.getVenta());
 		}
 		
 	}
@@ -73,7 +75,7 @@ public class VentaUtil {
 		int aforoSala = entrada.getProyeccion().getSala().getAforo();
 		
 		if (entradasVendidas >= aforoSala) {
-			throw new VentaException("Aforo Completo");
+			throw new SalaException("Aforo Completo", entrada.getProyeccion().getSala());
 		}
 		entradasVendidas++;
 		entrada.getProyeccion().setEntradasVendidas(entradasVendidas);

@@ -1,6 +1,7 @@
 package es.cic.grupo09.grupo09ejerc009.controller;
 
 import java.time.LocalDateTime;
+import java.util.NoSuchElementException;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -56,6 +57,15 @@ public class ReporteController {
 
 		
 		Page<Entrada> resultados = reporteService.reporteVentasPorDia(LocalDateTime.parse(dia), pageable);
+		
+		if(resultados.getContent().isEmpty()) {
+			
+			StringBuilder excepcion = new StringBuilder();
+			excepcion.append("Sin resultados para el dia ");
+			excepcion.append(dia);
+			
+			throw new NoSuchElementException(excepcion.toString());
+		}
 
 		return ResponseEntity.status(HttpStatus.ACCEPTED).contentType(MediaType.APPLICATION_JSON).body(resultados);
 

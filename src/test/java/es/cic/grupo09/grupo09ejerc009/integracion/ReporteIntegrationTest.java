@@ -112,6 +112,17 @@ class ReporteIntegrationTest {
 				.andExpect(jsonPath("$.content.length()",is(2)))
 				.andDo(print());
 	}
+	
+	@Test
+	void obtenerVentasPorDiaNoExisteTest() throws Exception {
+		
+		fecha = LocalDateTime.of(2022, Month.JULY, 2, 10, 30);
+		
+		mvc.perform(get("/api/v2/reporte/dia")
+				.param("dia",fecha.toString()))
+				.andExpect(status().is4xxClientError())
+				.andDo(print());
+	}
 
 	@Test
 	void obtenerVentasPorProyeccionTest() throws Exception {
@@ -136,9 +147,9 @@ class ReporteIntegrationTest {
 		StringBuilder idSala = new StringBuilder();
 		idSala.append(sala.getId());
 		
-		mvc.perform(get("/api/v2/reporte/proyeccion")
-				.param("proyeccion",idProyeccion.toString())
-				.param("sala",idSala.toString()))
+		mvc.perform(get("/api/v2/reporte/proyeccion/sala")
+				.param("idProyeccion",idProyeccion.toString())
+				.param("idSala",idSala.toString()))
 				.andExpect(status().is2xxSuccessful())
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON))
 				.andExpect(jsonPath("$.content.length()",is(2)))

@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import es.cic.grupo09.grupo09ejerc009.exception.VentaException;
 import es.cic.grupo09.grupo09ejerc009.model.Entrada;
 import es.cic.grupo09.grupo09ejerc009.service.VentaService;
 
@@ -33,14 +31,10 @@ public class VentaController {
 	private VentaService ventaService;
 
 	@PostMapping
-	public ResponseEntity<List<Entrada>> crearVenta(@RequestBody List<Entrada> entradas,
-			BindingResult errores) {
+	public ResponseEntity<List<Entrada>> crearVenta(@Validated @RequestBody List<Entrada> entradas) {
 
 		logger.trace("Creando una venta nueva cantidad: {}", entradas.size());
-
-		if (errores.hasErrors()) {
-			throw new VentaException("Error al crear la venta, datos incorrectos");
-		}
+		
 		this.ventaService.create(entradas);
 
 		return ResponseEntity.status(HttpStatus.CREATED).contentType(MediaType.APPLICATION_JSON).body(entradas);

@@ -14,10 +14,16 @@ public class Sala extends AbstractModel {
 
 	private static final long serialVersionUID = 4073218442416202924L;
 
-	@Min(1)
+	@Min(30)
 	@Max(100)
 	@NotNull
 	private int aforo;
+	
+	@NotNull
+	private int filas;
+	
+	@NotNull
+	private int butacasFila;
 
 	public int getAforo() {
 		return aforo;
@@ -25,6 +31,22 @@ public class Sala extends AbstractModel {
 
 	public void setAforo(int aforo) {
 		this.aforo = aforo;
+	}
+
+	public int getFilas() {
+		return filas;
+	}
+
+	public void setFilas(int filas) {
+		this.filas = filas;
+	}
+
+	public int getButacasFila() {
+		return butacasFila;
+	}
+
+	public void setButacasFila(int butacasFila) {
+		this.butacasFila = butacasFila;
 	}
 
 }

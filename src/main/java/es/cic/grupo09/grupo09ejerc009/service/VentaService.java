@@ -32,10 +32,17 @@ public class VentaService {
 
 		LOGGER.trace("Utilizando servicio {} {}", getClass().getName()," para intento de creacion de la venta.");
 
+		
 		ventaUtil.validarDescuentos(listaEntradas);
+		
 		listaEntradas.stream()
-			.forEach(e -> ventaUtil.actualizarImporteVenta(e));
-
+			.forEach(e -> {
+				ventaUtil.actualizarImporteVenta(e);
+				ventaUtil.validarProyeccion(e);
+				ventaUtil.validarButacaFila(e);
+				ventaUtil.actualizarDisponibles(e);
+			});
+		
 		return entradaDao.saveAll(listaEntradas);
 	}
 	
@@ -44,7 +51,7 @@ public class VentaService {
 		LOGGER.trace(
 				"Utilizando servicio {}, {}",getClass().getName()," para eliminar la venta.");
 
-		ventaDao.deleteById(venta);
+		ventaDao.deleteVenta(venta);
 	}
 	
 	public List<Entrada> modificarVenta(long ventaId, List<Entrada> entradas) {

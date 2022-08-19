@@ -33,6 +33,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import es.cic.grupo09.grupo09ejerc009.model.Proyeccion;
 import es.cic.grupo09.grupo09ejerc009.model.Sala;
+import es.cic.grupo09.grupo09ejerc009.util.VentaTestUtil;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -56,6 +57,9 @@ class ProyeccionIntegrationTest {
 	private Sala sala;
 	private Sala sala1;
 	private Sala sala2;
+	private Proyeccion proyeccion;
+	
+	private VentaTestUtil ventaTestUtil = new VentaTestUtil();
 	
 	@BeforeEach
 	void setUp() throws Exception {
@@ -83,14 +87,7 @@ class ProyeccionIntegrationTest {
 	    		sala2.setFilas(10);
 	    		em.persist(sala2);
 	    		
-	    		Proyeccion proyeccion = new Proyeccion();
-	    		proyeccion.setDuracionMin(120);
-	    		proyeccion.setEntradasVendidas(0);
-	    		proyeccion.setSesion(1);
-	    		proyeccion.setFechaApertura(LocalDate.of(2022, Month.SEPTEMBER, 10));
-	    		proyeccion.setFechaCierre(LocalDate.of(2022, Month.OCTOBER, 10));
-	    		proyeccion.setHoraProyeccion(LocalDateTime.of(2022, Month.SEPTEMBER, 11, 17, 00));
-	    		proyeccion.setPelicula("La dura vida del programador");
+	    		proyeccion = ventaTestUtil.getProyeccion();
 	    		proyeccion.setSala(sala);
 	    		em.persist(proyeccion);
 	        }
@@ -125,17 +122,7 @@ class ProyeccionIntegrationTest {
 	
 	@Test
 	void crearProyecciontest() throws JsonProcessingException, Exception {
-		
-		Proyeccion proyeccion = new Proyeccion();
-		proyeccion.setDuracionMin(120);
-		proyeccion.setEntradasVendidas(0);
-		proyeccion.setSesion(1);
-		proyeccion.setFechaApertura(LocalDate.of(2022, Month.SEPTEMBER, 10));
-		proyeccion.setFechaCierre(LocalDate.of(2022, Month.OCTOBER, 10));
-		proyeccion.setHoraProyeccion(LocalDateTime.of(2022, Month.SEPTEMBER, 11, 22, 00));
-		proyeccion.setPelicula("La dura vida del programador");
-		proyeccion.setSala(sala);
-		
+				
 		mvc.perform(post("/api/v2/proyeccion")
 				.accept(MediaType.APPLICATION_JSON)
 				.contentType(MediaType.APPLICATION_JSON)

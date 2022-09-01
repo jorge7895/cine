@@ -1,12 +1,13 @@
 package es.cic.grupo09.grupo09ejerc009.controller;
 
+import javax.validation.Valid;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,19 +20,16 @@ import es.cic.grupo09.grupo09ejerc009.service.ProyeccionService;
 @RequestMapping(path = "/api/v2/proyeccion")
 public class ProyeccionesController {
 	
-	private Logger LOGGER = LogManager.getLogger(ProyeccionesController.class);
+	private Logger logger = LogManager.getLogger(ProyeccionesController.class);
 
 	@Autowired
 	private ProyeccionService proyeccionService;
 
 	@PostMapping
-	public ResponseEntity<Proyeccion> crearProyeccion(@RequestBody Proyeccion proyeccion, BindingResult errores) {
+	public ResponseEntity<Proyeccion> crearProyeccion(@Valid @RequestBody Proyeccion proyeccion) {
 
-		LOGGER.trace("Creando una proyeccion nueva para la pelicula: {}", proyeccion.getPelicula());
-
-		if (errores.hasErrors()) {
-			throw new RuntimeException("Error al crear la venta");
-		}
+		logger.trace("Creando una proyeccion nueva para la pelicula: {}", proyeccion.getPelicula());
+		
 		proyeccionService.crearProyeccion(proyeccion);
 
 		return ResponseEntity.status(HttpStatus.CREATED).contentType(MediaType.APPLICATION_JSON).body(proyeccion);

@@ -1,6 +1,7 @@
 package es.cic.grupo09.grupo09ejerc009.controller;
 
 import java.time.LocalDateTime;
+import java.util.NoSuchElementException;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -22,7 +23,7 @@ import es.cic.grupo09.grupo09ejerc009.service.ReporteService;
 @RequestMapping(path = "/api/v2/reporte")
 public class ReporteController {
 
-	private Logger LOGGER = LogManager.getLogger(ReporteController.class);
+	private Logger logger = LogManager.getLogger(ReporteController.class);
 
 	@Autowired
 	private ReporteService reporteService;
@@ -30,7 +31,7 @@ public class ReporteController {
 	@GetMapping("/proyeccion/sala")
 	public ResponseEntity<Page<Entrada>> obtenerVentasPorSesionSala(@RequestParam long idProyeccion, @RequestParam long idSala,Pageable pageable) {
 
-		LOGGER.trace("Recuperando los datos de las ventas de la sala {} y la sesion {}", idProyeccion, idSala);
+		logger.trace("Recuperando los datos de las ventas de la sala {} y la sesion {}", idProyeccion, idSala);
 
 		Page<Entrada> resultados = reporteService.reporteVentasPorSesionSala(idProyeccion, idSala, pageable);
 
@@ -41,7 +42,7 @@ public class ReporteController {
 	@GetMapping("/total")
 	public ResponseEntity<Page<Entrada>> obtenerVentasTotales(Pageable pageable) {
 
-		LOGGER.trace("Recuperarndo los datos de las ventas");
+		logger.trace("Recuperarndo los datos de las ventas");
 		
 		Page<Entrada> resultados = reporteService.reporteVentasTotales(pageable);
 
@@ -52,10 +53,19 @@ public class ReporteController {
 	@GetMapping("/dia")
 	public ResponseEntity<Page<Entrada>> obtenerVentasPorDia(@RequestParam String dia, Pageable pageable) {
 
-		LOGGER.trace("Recuperarndo los datos de las ventas del día {}", dia);
+		logger.trace("Recuperarndo los datos de las ventas del día {}", dia);
 
 		
 		Page<Entrada> resultados = reporteService.reporteVentasPorDia(LocalDateTime.parse(dia), pageable);
+		
+		if(resultados.getContent().isEmpty()) {
+			
+			StringBuilder excepcion = new StringBuilder();
+			excepcion.append("Sin resultados para el dia ");
+			excepcion.append(dia);
+			
+			throw new NoSuchElementException(excepcion.toString());
+		}
 
 		return ResponseEntity.status(HttpStatus.ACCEPTED).contentType(MediaType.APPLICATION_JSON).body(resultados);
 
@@ -64,7 +74,7 @@ public class ReporteController {
 	@GetMapping("/proyeccion")
 	public ResponseEntity<Page<Entrada>> obtenerVentasPorProyeccion(@RequestParam long proyeccion, Pageable pageable) {
 
-		LOGGER.trace("Recuperarndo los datos de las ventas de la sesion: ", proyeccion);
+		logger.trace("Recuperarndo los datos de las ventas de la sesion: ", proyeccion);
 
 		Page<Entrada> resultados = reporteService.reporteVentasPorProyeccion(proyeccion, pageable);
 

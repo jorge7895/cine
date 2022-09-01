@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,20 +25,16 @@ import es.cic.grupo09.grupo09ejerc009.service.VentaService;
 @RequestMapping(path = "/api/v2/venta")
 public class VentaController {
 
-	private Logger LOGGER = LogManager.getLogger(VentaController.class);
+	private Logger logger = LogManager.getLogger(VentaController.class);
 
 	@Autowired
 	private VentaService ventaService;
 
 	@PostMapping
-	public ResponseEntity<List<Entrada>> crearVenta(@RequestBody List<Entrada> entradas,
-			BindingResult errores) {
+	public ResponseEntity<List<Entrada>> crearVenta(@Validated @RequestBody List<Entrada> entradas) {
 
-		LOGGER.trace("Creando una venta nueva cantidad: {}", entradas.size());
-
-		if (errores.hasErrors()) {
-			throw new RuntimeException("Error al crear la venta");
-		}
+		logger.trace("Creando una venta nueva cantidad: {}", entradas.size());
+		
 		this.ventaService.create(entradas);
 
 		return ResponseEntity.status(HttpStatus.CREATED).contentType(MediaType.APPLICATION_JSON).body(entradas);
@@ -49,7 +44,7 @@ public class VentaController {
 	@ResponseStatus(code = HttpStatus.OK)
 	public void deleteVenta(@RequestParam long idVenta) {
 
-		LOGGER.trace("Actaualizando la venta con id: {}", idVenta);
+		logger.trace("Actaualizando la venta con id: {}", idVenta);
 
 		ventaService.devolver(idVenta);
 	}
@@ -57,7 +52,7 @@ public class VentaController {
 	@PutMapping("/modificacion")
 	public ResponseEntity<List<Entrada>> updateVenta(@RequestParam long ventaId, @Validated @RequestBody List<Entrada> entradas) {
 
-		LOGGER.trace("Actaualizando la venta con id: {}", ventaId);
+		logger.trace("Actaualizando la venta con id: {}", ventaId);
 
 		
 		ventaService.modificarVenta(ventaId, entradas);

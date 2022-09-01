@@ -18,15 +18,14 @@ import es.cic.grupo09.grupo09ejerc009.repository.ReporteDAO;
 @Transactional
 public class ReporteService {
 
-	private Logger LOGGER = LogManager.getLogger(ReporteService.class);
+	private Logger logger = LogManager.getLogger(ReporteService.class);
 	
 	@Autowired
 	private ReporteDAO reporteDao;
 	
 	public Page<Entrada> reporteVentasTotales(Pageable pageable) {
 
-		LOGGER.trace(
-				"Utilizando servicio {}, {}",getClass().getName()," para intento de lecturas de ventas.");
+		generarLog();
 
 		return reporteDao.findAll(pageable);
 
@@ -34,8 +33,7 @@ public class ReporteService {
 	
 	public Page<Entrada> reporteVentasPorDia(LocalDateTime dia, Pageable pageable) {
 
-		LOGGER.trace(
-				"Utilizando servicio {}, {}",getClass().getName()," para intento de lecturas de ventas.");
+		generarLog();
 
 		return reporteDao.readByDiaDeVenta(dia, pageable);
 
@@ -43,8 +41,7 @@ public class ReporteService {
 	
 	public Page<Entrada> reporteVentasPorProyeccion(long idSesion, Pageable pageable) {
 
-		LOGGER.trace(
-				"Utilizando servicio {}, {}",getClass().getName()," para intento de lecturas de ventas.");
+		generarLog();
 
 		return reporteDao.readByProyeccion(idSesion, pageable);
 
@@ -52,10 +49,14 @@ public class ReporteService {
 	
 	public Page<Entrada> reporteVentasPorSesionSala(long idProyeccion, long idSala, Pageable pageable) {
 
-		LOGGER.trace(
-				"Utilizando servicio {}, {}",getClass().getName()," para intento de lecturas de ventas.");
+		generarLog();
 
 		return reporteDao.readBySesionSala(idProyeccion, idSala, pageable);
 
+	}
+
+	private void generarLog() {
+		logger.trace(
+				"Utilizando servicio {}, {}",getClass().getName()," para intento de lecturas de ventas.");
 	}
 }

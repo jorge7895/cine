@@ -6,26 +6,18 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import es.cic.grupo09.grupo09ejerc009.model.Venta;
 
 @SuppressWarnings("serial")
-@ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
+@ResponseStatus(value = HttpStatus.BAD_REQUEST)
 public class VentaException extends RuntimeException {
 
-	private Venta venta;
-
-	public VentaException(String message, Throwable cause, Venta venta) {
-		super(message, cause);
-		this.venta = venta;
-	}
+	private final Venta venta;
 
 	public VentaException(String message, Venta venta) {
 		super(message);
 		this.venta = venta;
 	}
 	
-	public VentaException(String message) {
-		super(message);
-	}
-
-	public Venta getVenta() {
-		return this.venta;
+	@Override
+	public String getMessage() {
+		return String.format("%s en la venta %s", super.getMessage(), venta.toString());
 	}
 }

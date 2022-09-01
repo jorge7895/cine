@@ -1,7 +1,10 @@
 package es.cic.grupo09.grupo09ejerc009.integracion;
 
+import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.time.LocalDate;
@@ -30,6 +33,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import es.cic.grupo09.grupo09ejerc009.model.Proyeccion;
 import es.cic.grupo09.grupo09ejerc009.model.Sala;
+import es.cic.grupo09.grupo09ejerc009.util.VentaTestUtil;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -53,6 +57,9 @@ class ProyeccionIntegrationTest {
 	private Sala sala;
 	private Sala sala1;
 	private Sala sala2;
+	private Proyeccion proyeccion;
+	
+	private VentaTestUtil ventaTestUtil = new VentaTestUtil();
 	
 	@BeforeEach
 	void setUp() throws Exception {
@@ -80,14 +87,7 @@ class ProyeccionIntegrationTest {
 	    		sala2.setFilas(10);
 	    		em.persist(sala2);
 	    		
-	    		Proyeccion proyeccion = new Proyeccion();
-	    		proyeccion.setDuracionMin(120);
-	    		proyeccion.setEntradasVendidas(0);
-	    		proyeccion.setSesion(1);
-	    		proyeccion.setFechaApertura(LocalDate.of(2022, Month.SEPTEMBER, 10));
-	    		proyeccion.setFechaCierre(LocalDate.of(2022, Month.OCTOBER, 10));
-	    		proyeccion.setHoraProyeccion(LocalDateTime.of(2022, Month.SEPTEMBER, 11, 17, 00));
-	    		proyeccion.setPelicula("La dura vida del programador");
+	    		proyeccion = ventaTestUtil.getProyeccion();
 	    		proyeccion.setSala(sala);
 	    		em.persist(proyeccion);
 	        }
@@ -100,7 +100,7 @@ class ProyeccionIntegrationTest {
 
 	@Test
 	@Transactional(propagation = Propagation.NOT_SUPPORTED)
-	void crearProyecciontest() throws JsonProcessingException, Exception {
+	void crearProyeccionRepetidatest() throws JsonProcessingException, Exception {
 		
 		Proyeccion proyeccion = new Proyeccion();
 		proyeccion.setDuracionMin(120);
@@ -116,7 +116,20 @@ class ProyeccionIntegrationTest {
 				.accept(MediaType.APPLICATION_JSON)
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(proyeccion)))
-				.andExpect(status().is5xxServerError())
+				.andExpect(status().is4xxClientError())
+				.andDo(print());
+	}
+	
+	@Test
+	void crearProyecciontest() throws JsonProcessingException, Exception {
+				
+		mvc.perform(post("/api/v2/proyeccion")
+				.accept(MediaType.APPLICATION_JSON)
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(objectMapper.writeValueAsString(proyeccion)))
+				.andExpect(status().is2xxSuccessful())
+				.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+				.andExpect(jsonPath("$.pelicula",is("La dura vida del programador")))
 				.andDo(print());
 	}
 

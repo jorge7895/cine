@@ -1,43 +1,31 @@
 # CINE DE FORMACION CIC (HEREDADO DE GRUPO02)
 ---
-Cine que realiza ventas constituidas por entradas, que pueden tener descuentos y apunta a una sesion que 
-	posee la pelicula y la sala como minimo.
 
-## Leyenda
+
+## Descripción
 ---
-
-### Ejemplo
-		> 'nombre de la tarea' 'estado'
-	
-### Estados 
-		- No empezada.
-		+ En desarrollo.
-		* Terminada.
+Aplicación para la gestión de un cine que realiza venta de entradas, que pueden tener descuentos de tres tipos, “Senior, Joven y Grupo”. También ha de permitir la devolución y la modificación de las compras realizadas.
+Ademas permitirá programar las proyecciones y no permitirá la venta de entradas para proyecciones que no estén abiertas.
+También ha de tener la posibilidad de obtener reportes de las ventas por sala y proyección, ventas totales, por día y por proyección.
 
 # Requisitos
 ---
-		> Entrada *
-			> Vender *
-			> Devolver *
+		> Entrada
+			> Vender
+			> Devolver
+            > Modificar
+        >Proyección
+            >Programar
 		> Descuentos
-			> Por grupo 10% *
-		> Reportes/listar *
-			> Por sala y sesion *
-			> Por ventas totales *
-			> Por dia *
-			> Por sesion *
-
-## Nuevos casos de uso
----
-		> Nuevo modelo, actualizarlo *
-		> Modificaciones en las ventas *
-			> Poder devolver parte de las entrads y coger de otra sesion *
-			> Poder comprar entradas de diferentes sesiones con los descuentos igualemente, no acomulables +
-		> Descuentos *
-			> Por grupo 10% *
-			> Por joven 15% *
-			> Por 3ªEdad 25% *
+			> Grupo 10%
+            > Senior 25%
+            > Joven 15%
+		> Reportes/listar
+			> Por sala y sesion
+			> Por ventas totales
+			> Por dia
+			> Por sesion
  
 # Integrantes
 ---
-	Bryan Gonzalez, Jorge Pardo y Luis Cachon.
+	Bryan Gonzalez, Jorge Pardo.

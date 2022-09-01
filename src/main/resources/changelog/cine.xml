@@ -1,0 +1,102 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <changeSet author="curso01 (generated)" id="1661191151520-1">
+        <createTable tableName="entrada">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="activa" type="BIT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="butaca" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fila" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="tipo_entrada" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="proyeccion_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="venta_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="curso01 (generated)" id="1661191151520-2">
+        <createTable tableName="proyeccion">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="duracion_min" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="entradas_vendidas" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fecha_apertura" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fecha_cierre" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="hora_proyeccion" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pelicula" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sesion" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sala_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="curso01 (generated)" id="1661191151520-3">
+        <createTable tableName="sala">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="aforo" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="butacas_fila" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="filas" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="curso01 (generated)" id="1661191151520-4">
+        <createTable tableName="venta">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="activa" type="BIT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="dia_de_venta" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="importe_total" type="FLOAT(12)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="curso01 (generated)" id="1661191151520-5">
+        <addUniqueConstraint columnNames="proyeccion_id, butaca, activa" constraintName="UniqueEntrada" tableName="entrada"/>
+    </changeSet>
+    <changeSet author="curso01 (generated)" id="1661191151520-6">
+        <addUniqueConstraint columnNames="sala_id, sesion, hora_proyeccion" constraintName="UniqueProyeccion" tableName="proyeccion"/>
+    </changeSet>
+    <changeSet author="curso01 (generated)" id="1661191151520-7">
+        <createIndex indexName="FKflvnd5s54v8g4gk4me7c7qm2l" tableName="entrada">
+            <column name="venta_id"/>
+        </createIndex>
+    </changeSet>
+</databaseChangeLog>

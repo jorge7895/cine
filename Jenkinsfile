@@ -1,8 +1,10 @@
 pipeline {
-    agent any
-    tools {
-    	maven "Maven inicial"
-    	jdk 'OpenJDK 17 inicial'
+    agent {
+		dockerfile {
+			filename 'Dockerfile'
+			label 'linux'
+			args '-v /datos/.m2/repository:/home/jenkins/.m2/repository'
+		}
     }
     stages {
     	stage('Compilacion y ejecucion de test') {
@@ -17,28 +19,6 @@ pipeline {
 				)
     		}
     	}
-	stage('Publicar en sonar') {
-		steps {
-	            script{
-
-			def scannerHome = tool 'sonarqube';
-			def jobNameFiltered = "${env.JOB_NAME}".split('/').join('-')
-
-			withSonarQubeEnv('sonarqube') {
-				sh " ${tool("sonarqube")}/bin/sonar-scanner \
-		                    -Dsonar.projectKey=${jobNameFiltered} \
-                		    -Dsonar.projectName=${jobNameFiltered} \
-				    -Dsonar.sources=src/main/java/ \
-				    -Dsonar.language=java \
-					-Dsonar.java.coveragePlugin=jacoco \
-					-Dsonar.tests=src/test/java \
-					-Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml \
-    			    -Dsonar.junit.reportsPaths=target/surefire-reports \
-				    -Dsonar.java.binaries=target/classes,target/test-classes"
-			}
-		    }
-		}
-	}
     }
     post {
        always {

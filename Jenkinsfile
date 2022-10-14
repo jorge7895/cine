@@ -2,7 +2,6 @@ pipeline {
     agent {
 		dockerfile {
 			filename 'Dockerfile'
-			label 'linux'
 			args '-v /datos/.m2/repository:/home/jenkins/.m2/repository'
 		}
     }

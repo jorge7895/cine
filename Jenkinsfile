@@ -3,10 +3,7 @@ pipeline {
     stages {
     	stage('Compilacion y ejecucion de test') {
 		agent {
-		dockerfile {
-			filename 'Dockerfile'
-			args '-v /datos/.m2/repository:/home/jenkins/.m2/repository'
-		}
+		dockerfile true
     }
     		steps {
 				sh 'mvn -Djacoco.formats=xml clean org.jacoco:jacoco-maven-plugin:0.8.8:prepare-agent test org.jacoco:jacoco-maven-plugin:0.8.8:report'

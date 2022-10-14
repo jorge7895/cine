@@ -1,8 +1,9 @@
 pipeline {
-    agent any
-    tools {
-    	maven "Maven inicial"
-    	jdk 'OpenJDK 17 inicial'
+    agent {
+        docker {
+            image 'maven:3.8.6-eclipse-temurin-17-alpine' 
+            args '-v /root/.m2:/root/.m2' 
+        }
     }
     stages {
     	stage('Compilacion y ejecucion de test') {
